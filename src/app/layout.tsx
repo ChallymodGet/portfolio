@@ -3,6 +3,7 @@ import { Inter } from "next/font/google";
 import "./globals.css";
 import SmoothScroll from "@/components/animations/SmoothScroll";
 import CustomCursor from "@/components/animations/CustomCursor";
+import EasterEggs from "@/components/animations/EasterEggs";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -17,8 +18,9 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en" style={{ backgroundColor: "#0a0a0a" }}>
-      <body className={inter.className} style={{ backgroundColor: "#0a0a0a", color: "#ededed" }}>
+    <html lang="en">
+      <body className={inter.className}>
+        <EasterEggs />
         <CustomCursor />
         <SmoothScroll>
           {children}
