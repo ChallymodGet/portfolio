@@ -8,9 +8,9 @@ import { motion } from "framer-motion";
 gsap.registerPlugin(ScrollTrigger);
 
 export default function Hero() {
-  const containerRef = useRef(null);
-  const textRef = useRef(null);
-  const glassRef = useRef(null);
+  const containerRef = useRef<HTMLDivElement>(null);
+  const textRef = useRef<HTMLHeadingElement>(null);
+  const glassRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     const ctx = gsap.context(() => {
@@ -73,12 +73,11 @@ export default function Hero() {
       {/* The Blueprint Grid Background */}
       <div className="absolute inset-0 grid-background opacity-30 pointer-events-none" />
       
-      {/* Ambient Glows (Inspired by the "Techy" samples) */}
+      {/* Ambient Glows */}
       <div className="absolute top-[-10%] left-[-10%] w-[40%] h-[40%] bg-accent-blue/10 blur-[120px] rounded-full" />
       <div className="absolute bottom-[-10%] right-[-10%] w-[40%] h-[40%] bg-accent-purple/10 blur-[120px] rounded-full" />
 
       <div className="hero-content z-10 text-center px-4">
-        {/* Tagline */}
         <motion.div 
           initial={{ opacity: 0, y: 10 }}
           animate={{ opacity: 1, y: 0 }}
@@ -88,7 +87,6 @@ export default function Hero() {
           System Status: Online // Product Architect
         </motion.div>
 
-        {/* Main Headline */}
         <h1 
           ref={textRef} 
           className="text-6xl md:text-8xl font-bold tracking-tighter text-white mb-8"
@@ -97,7 +95,6 @@ export default function Hero() {
           {splitText("Onofuevure Charles")}
         </h1>
 
-        {/* Sub-headline */}
         <motion.p 
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
@@ -108,7 +105,6 @@ export default function Hero() {
           <span className="text-white font-medium"> intuitive user experiences</span> through scalable digital products.
         </motion.p>
 
-        {/* The Glass Element (Visual Anchor) */}
         <div 
           ref={glassRef}
           className="mt-16 relative w-64 h-64 mx-auto"
@@ -121,7 +117,6 @@ export default function Hero() {
         </div>
       </div>
 
-      {/* Scroll Indicator */}
       <div className="absolute bottom-10 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2">
         <span className="text-[10px] font-mono text-gray-500 uppercase tracking-widest">Scroll to explore</span>
         <div className="w-[1px] h-12 bg-gradient-to-b from-accent-green to-transparent" />
