@@ -17,8 +17,8 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en">
-      <body className={inter.className}>
+    <html lang="en" style={{ backgroundColor: "#0a0a0a" }}>
+      <body className={inter.className} style={{ backgroundColor: "#0a0a0a", color: "#ededed" }}>
         <CustomCursor />
         <SmoothScroll>
           {children}

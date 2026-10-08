@@ -2,22 +2,39 @@
 @tailwind components;
 @tailwind utilities;
 
-:root {
-  --background: #0a0a0a;
-  --foreground: #ededed;
-  --accent-green: #00ff41;
-  --accent-blue: #00d1ff;
+/* FORCE STYLES: These will work even if the Tailwind compiler fails */
+html, body {
+  background-color: #0a0a0a !important;
+  color: #ededed !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  width: 100% !important;
+  height: 100% !important;
 }
 
 body {
-  background-color: #0a0a0a !important;
-  color: #ededed !important;
-  margin: 0;
-  padding: 0;
-  overflow-x: hidden;
+  font-family: 'Inter', sans-serif !important;
+  overflow-x: hidden !important;
 }
+
+/* Custom a-la-carte utility classes so we don't rely on @tailwind utilities */
+.bg-charcoal-900 { background-color: #0a0a0a !important; }
+.text-accent-green { color: #00ff41 !important; }
+.text-white { color: #ffffff !important; }
+.text-gray-400 { color: #a1a1aa !important; }
+.font-mono { font-family: monospace !important; }
+.font-bold { font-weight: 700 !important; }
+.tracking-tighter { letter-spacing: -0.05em !important; }
+.tracking-widest { letter-spacing: 0.2em !important; }
+.uppercase { text-transform: uppercase !important; }
 
 .grid-background {
   background-image: radial-gradient(circle, #333 1px, transparent 1px) !important;
   background-size: 30px 30px !important;
+}
+
+.hero-content {
+  position: relative;
+  z-index: 10;
+  text-align: center;
 }
