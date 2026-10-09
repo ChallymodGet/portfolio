@@ -1,6 +1,7 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+@import "tailwindcss";
+@config "../../tailwind.config.js";
+
+@source "../**/*.{js,ts,jsx,tsx}";
 
 :root {
   --background: #ffffff;
@@ -28,15 +29,50 @@
   --grid-color: rgba(255, 255, 255, 0.1);
 }
 
-body {
-  background-color: var(--background) !important;
-  color: var(--foreground) !important;
-  margin: 0 !important;
-  padding: 0 !important;
-  transition: background-color 0.3s ease, color 0.3s ease;
+@layer base {
+  html {
+    color-scheme: light dark;
+  }
+
+  body {
+    background-color: var(--background);
+    color: var(--foreground);
+    margin: 0;
+    padding: 0;
+    width: 100%;
+    min-height: 100%;
+    overflow-x: hidden;
+    transition: background-color 0.3s ease, color 0.3s ease;
+  }
 }
 
-.grid-background {
-  background-image: radial-gradient(circle, var(--grid-color) 1px, transparent 1px) !important;
-  background-size: 30px 30px !important;
+@layer components {
+  .grid-background {
+    background-image: radial-gradient(circle, var(--grid-color) 1px, transparent 1px);
+    background-size: 30px 30px;
+  }
+
+  .hero-content {
+    position: relative;
+    z-index: 10;
+    text-align: center;
+  }
+}
+
+@layer utilities {
+  .text-accent-green {
+    color: var(--accent-green);
+  }
+
+  .text-accent-blue {
+    color: var(--accent-blue);
+  }
+
+  .bg-accent-green {
+    background-color: var(--accent-green);
+  }
+
+  .from-accent-green {
+    --tw-gradient-from: var(--accent-green);
+  }
 }
