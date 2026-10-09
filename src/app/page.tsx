@@ -14,7 +14,7 @@ export default function Home() {
     <main className="bg-background relative overflow-x-hidden">
       <Hero />
 
-      <div className="relative">
+      <div className="relative isolate">
         {projects.map((project, index) => (
           <CaseStudy key={project.id} project={project} index={index} />
         ))}

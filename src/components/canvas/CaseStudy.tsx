@@ -21,69 +21,45 @@ export default function CaseStudy({ project, index }: CaseStudyProps) {
     if (!section) return;
 
     const ctx = gsap.context(() => {
-      const mm = gsap.matchMedia();
+      const items = section.querySelectorAll(".case-item");
 
-      mm.add("(min-width: 1024px)", () => {
-        ScrollTrigger.create({
-          trigger: section,
-          start: "top top",
-          end: () => `+=${Math.max(window.innerHeight * 1.5, section.offsetHeight)}`,
-          pin: true,
-          scrub: true,
-          anticipatePin: 1,
-          invalidateOnRefresh: true,
-        });
-
-        gsap.to(imgRef.current, {
-          scrollTrigger: {
-            trigger: section,
-            start: "top top",
-            end: "bottom top",
-            scrub: true,
-          },
-          scale: 1.1,
-          y: -50,
-        });
-
-        const items = section.querySelectorAll(".case-item");
-        items.forEach((item, i) => {
-          gsap.fromTo(
-            item,
-            { opacity: 0, x: i % 2 === 0 ? -50 : 50 },
-            {
-              opacity: 1,
-              x: 0,
-              scrollTrigger: {
-                trigger: item,
-                start: "top 80%",
-                end: "top 50%",
-                scrub: true,
-              },
-            }
-          );
-        });
+      items.forEach((item, i) => {
+        gsap.fromTo(
+          item,
+          { opacity: 0, y: 28 },
+          {
+            opacity: 1,
+            y: 0,
+            duration: 0.65,
+            ease: "power2.out",
+            scrollTrigger: {
+              trigger: item,
+              start: "top 92%",
+              toggleActions: "play none none reverse",
+            },
+            delay: i * 0.05,
+          }
+        );
       });
 
-      mm.add("(max-width: 1023px)", () => {
-        const items = section.querySelectorAll(".case-item");
-        items.forEach((item) => {
-          gsap.fromTo(
-            item,
-            { opacity: 0, y: 24 },
-            {
-              opacity: 1,
-              y: 0,
-              duration: 0.6,
-              ease: "power2.out",
-              scrollTrigger: {
-                trigger: item,
-                start: "top 90%",
-                toggleActions: "play none none reverse",
-              },
-            }
-          );
-        });
-      });
+      if (imgRef.current) {
+        gsap.fromTo(
+          imgRef.current,
+          { opacity: 0, scale: 0.96, y: 24 },
+          {
+            opacity: 1,
+            scale: 1,
+            y: 0,
+            duration: 0.8,
+            ease: "power2.out",
+            scrollTrigger: {
+              trigger: section,
+              start: "top 80%",
+              toggleActions: "play none none reverse",
+            },
+          }
+        );
+      }
     }, sectionRef);
 
     const onResize = () => ScrollTrigger.refresh();
@@ -98,51 +74,55 @@ export default function CaseStudy({ project, index }: CaseStudyProps) {
   return (
     <section
       ref={sectionRef}
-      className="relative w-full min-h-0 lg:min-h-screen lg:h-screen overflow-visible lg:overflow-hidden bg-background flex items-center justify-center px-4 sm:px-6 py-16 sm:py-20 lg:py-0"
+      className="relative isolate w-full overflow-hidden border-b border-surface bg-background scroll-mt-24"
+      style={{ zIndex: index + 1 }}
     >
-      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[min(600px,90vw)] h-[min(600px,90vw)] bg-accent-blue/5 blur-[120px] rounded-full pointer-events-none" />
+      <div
+        className="pointer-events-none absolute inset-x-0 top-1/2 mx-auto h-[min(600px,80vw)] w-[min(600px,80vw)] -translate-y-1/2 rounded-full bg-accent-blue/5 blur-[120px]"
+        aria-hidden
+      />
 
-      <div className="container mx-auto max-w-6xl grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12 items-center">
-        <div className="relative z-10 flex justify-center order-1 lg:order-none">
-          <div className="relative w-full max-w-[500px] aspect-[4/3] group">
-            <div className="absolute inset-0 bg-[var(--surface-strong)] backdrop-blur-md border border-surface rounded-2xl rotate-3 scale-95 opacity-50 transition-transform group-hover:rotate-0" />
+      <div className="relative z-10 mx-auto flex w-full max-w-6xl flex-col justify-center px-4 py-14 sm:px-6 sm:py-16 md:py-20 lg:grid lg:grid-cols-2 lg:items-start lg:gap-10 lg:py-24 xl:gap-12 xl:py-28">
+        <div className="mb-10 flex justify-center lg:mb-0 lg:sticky lg:top-24 lg:self-start">
+          <div className="group relative aspect-[4/3] w-full max-w-[500px]">
+            <div className="absolute inset-0 rotate-3 scale-95 rounded-2xl border border-surface bg-surface-strong opacity-50 backdrop-blur-md transition-transform group-hover:rotate-0" />
 
             <img
               ref={imgRef}
               src={project.heroImage}
               alt={project.title}
-              className="relative z-10 w-full h-full object-cover rounded-2xl border border-surface shadow-2xl transition-transform duration-700"
+              className="relative z-10 h-full w-full rounded-2xl border border-surface object-cover shadow-2xl"
             />
 
-            <div className="absolute -bottom-3 -right-2 sm:-bottom-4 sm:-right-4 bg-accent-green text-black font-mono text-[9px] sm:text-[10px] font-bold px-2.5 sm:px-3 py-1 rounded-full z-20 uppercase max-w-[70%] truncate">
+            <div className="absolute -bottom-3 -right-2 z-20 max-w-[70%] truncate rounded-full bg-accent-green px-2.5 py-1 font-mono text-[9px] font-bold uppercase text-black sm:-bottom-4 sm:-right-4 sm:px-3 sm:text-[10px]">
               {project.category}
             </div>
           </div>
         </div>
 
-        <div className="relative z-10 space-y-8 sm:space-y-10 lg:space-y-12 order-2 lg:order-none">
+        <div className="space-y-8 sm:space-y-10">
           <div>
-            <p className="font-mono text-accent-green text-[10px] sm:text-xs uppercase tracking-widest mb-2">
+            <p className="mb-2 font-mono text-[10px] uppercase tracking-widest text-accent-green sm:text-xs">
               Case Study {String(index + 1).padStart(2, "0")}
             </p>
-            <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-foreground mb-3 sm:mb-4 tracking-tighter break-words">
+            <h2 className="mb-3 break-words text-3xl font-bold tracking-tighter text-foreground sm:mb-4 sm:text-4xl lg:text-5xl">
               {project.title}
             </h2>
-            <p className="text-muted text-base sm:text-lg leading-relaxed">
+            <p className="text-base leading-relaxed text-muted sm:text-lg">
               {project.description}
             </p>
           </div>
 
-          <div className="grid grid-cols-2 gap-3 sm:gap-4">
+          <div className="grid grid-cols-1 gap-3 min-[420px]:grid-cols-2 sm:gap-4">
             {project.metrics.map((m, i) => (
               <div
                 key={i}
-                className="case-item p-3 sm:p-4 bg-surface border border-surface rounded-xl backdrop-blur-sm"
+                className="case-item rounded-xl border border-surface bg-surface p-3 backdrop-blur-sm sm:p-4"
               >
-                <span className="block text-accent-blue font-mono text-[10px] sm:text-xs uppercase mb-1 leading-tight">
+                <span className="mb-1 block font-mono text-[10px] uppercase leading-tight text-accent-blue sm:text-xs">
                   {m.label}
                 </span>
-                <span className="text-xl sm:text-2xl lg:text-3xl font-bold text-foreground">
+                <span className="text-xl font-bold text-foreground sm:text-2xl lg:text-3xl">
                   {m.value}
                 </span>
               </div>
@@ -153,18 +133,18 @@ export default function CaseStudy({ project, index }: CaseStudyProps) {
             {project.challenges.map((c, i) => (
               <div
                 key={i}
-                className="case-item p-4 sm:p-6 bg-surface border-l-2 border-accent-green rounded-r-xl backdrop-blur-sm"
+                className="case-item rounded-r-xl border-l-2 border-accent-green bg-surface p-4 backdrop-blur-sm sm:p-6"
               >
-                <p className="text-xs sm:text-sm font-mono text-accent-green mb-2 uppercase tracking-widest">
+                <p className="mb-2 font-mono text-xs uppercase tracking-widest text-accent-green sm:text-sm">
                   The Challenge
                 </p>
-                <p className="text-muted mb-3 sm:mb-4 italic text-sm sm:text-base">
+                <p className="mb-3 text-sm italic text-muted sm:mb-4 sm:text-base">
                   &ldquo;{c.problem}&rdquo;
                 </p>
-                <p className="text-xs sm:text-sm font-mono text-accent-blue mb-2 uppercase tracking-widest">
+                <p className="mb-2 font-mono text-xs uppercase tracking-widest text-accent-blue sm:text-sm">
                   The Solution
                 </p>
-                <p className="text-foreground font-medium text-sm sm:text-base">
+                <p className="text-sm font-medium text-foreground sm:text-base">
                   {c.solution}
                 </p>
               </div>
