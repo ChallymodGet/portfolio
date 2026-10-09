@@ -4,6 +4,7 @@ import "./globals.css";
 import SmoothScroll from "@/components/animations/SmoothScroll";
 import CustomCursor from "@/components/animations/CustomCursor";
 import EasterEggs from "@/components/animations/EasterEggs";
+import ThemeToggle from "@/components/animations/ThemeToggle";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -20,6 +21,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={inter.className}>
+        <ThemeToggle />
         <EasterEggs />
         <CustomCursor />
         <SmoothScroll>

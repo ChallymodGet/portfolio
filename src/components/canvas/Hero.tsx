@@ -14,7 +14,6 @@ export default function Hero() {
 
   useEffect(() => {
     const ctx = gsap.context(() => {
-      // 1. Text Animation: Staggered "Render" effect
       const letters = textRef.current?.querySelectorAll(".char");
       if (letters) {
         gsap.fromTo(
@@ -32,7 +31,6 @@ export default function Hero() {
         );
       }
 
-      // 2. Glass Element: Floating animation
       gsap.to(glassRef.current, {
         y: -20,
         duration: 2,
@@ -41,7 +39,6 @@ export default function Hero() {
         ease: "sine.inOut",
       });
 
-      // 3. Scroll-triggered fade out
       gsap.to(".hero-content", {
         scrollTrigger: {
           trigger: containerRef.current,
@@ -59,39 +56,27 @@ export default function Hero() {
 
   const splitText = (text: string) => {
     return text.split("").map((char, i) => (
-      <span key={i} className="char inline-block">
-        {char === " " ? " " : char}
-      </span>
+      <span key={i} className="char inline-block">{char === " " ? " " : char}</span>
     ));
   };
 
   return (
-    <section 
-      ref={containerRef} 
-      className="relative h-screen w-full flex items-center justify-center overflow-hidden bg-charcoal-900"
-    >
-      {/* The Blueprint Grid Background */}
+    <section ref={containerRef} className="relative h-screen w-full flex items-center justify-center overflow-hidden bg-[var(--background)]">
       <div className="absolute inset-0 grid-background opacity-30 pointer-events-none" />
-      
-      {/* Ambient Glows */}
       <div className="absolute top-[-10%] left-[-10%] w-[40%] h-[40%] bg-accent-blue/10 blur-[120px] rounded-full" />
       <div className="absolute bottom-[-10%] right-[-10%] w-[40%] h-[40%] bg-accent-purple/10 blur-[120px] rounded-full" />
 
-      <div className="hero-content z-10 text-center px-4">
+      <div className="hero-content z-10 text-center px-6 max-w-5xl">
         <motion.div 
           initial={{ opacity: 0, y: 10 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.2 }}
-          className="font-mono text-accent-green text-sm mb-6 tracking-widest uppercase"
+          className="font-mono text-accent-green text-xs md:text-sm mb-6 tracking-widest uppercase"
         >
           System Status: Online // Product Architect
         </motion.div>
 
-        <h1 
-          ref={textRef} 
-          className="text-6xl md:text-8xl font-bold tracking-tighter text-white mb-8"
-          style={{ perspective: "1000px" }}
-        >
+        <h1 ref={textRef} className="text-4xl sm:text-6xl md:text-8xl font-bold tracking-tighter text-white mb-8" style={{ perspective: "1000px" }}>
           {splitText("Onofuevure Charles")}
         </h1>
 
@@ -99,19 +84,16 @@ export default function Hero() {
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ delay: 1.5 }}
-          className="max-w-2xl mx-auto text-gray-400 text-lg md:text-xl font-light leading-relaxed"
+          className="max-w-2xl mx-auto text-gray-400 text-base md:text-xl font-light leading-relaxed"
         >
           Bridging the gap between <span className="text-white font-medium">complex business logic</span> and 
           <span className="text-white font-medium"> intuitive user experiences</span> through scalable digital products.
         </motion.p>
 
-        <div 
-          ref={glassRef}
-          className="mt-16 relative w-64 h-64 mx-auto"
-        >
+        <div ref={glassRef} className="mt-12 md:mt-16 relative w-48 h-48 md:w-64 md:h-64 mx-auto">
           <div className="absolute inset-0 bg-white/5 backdrop-blur-xl border border-white/20 rounded-3xl rotate-12 shadow-2xl" />
           <div className="absolute inset-0 bg-gradient-to-br from-white/10 to-transparent backdrop-blur-md border border-white/30 rounded-3xl -rotate-6 shadow-2xl" />
-          <div className="absolute inset-0 flex items-center justify-center text-accent-blue font-mono text-xs opacity-50">
+          <div className="absolute inset-0 flex items-center justify-center text-accent-blue font-mono text-[10px] opacity-50">
             [ PROCESS_CORE ]
           </div>
         </div>
