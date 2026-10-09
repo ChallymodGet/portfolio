@@ -38,7 +38,7 @@ export default function EasterEggs() {
                {Array(100).fill("01011010101011010010101011010101").join(" ")}
              </div>
           </div>
-          <div className="relative z-10 bg-accent-green text-black font-bold px-6 py-2 rounded-full animate-bounce">
+          <div className="green-pill relative z-10 font-bold px-6 py-2 rounded-full animate-bounce">
             DEV_MODE_ACTIVATED
           </div>
         </motion.div>

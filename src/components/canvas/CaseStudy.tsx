@@ -94,7 +94,7 @@ export default function CaseStudy({ project, index }: CaseStudyProps) {
               className="relative z-10 h-full w-full rounded-2xl border border-surface object-cover shadow-2xl"
             />
 
-            <div className="absolute -bottom-3 -right-2 z-20 max-w-[70%] truncate rounded-full bg-accent-green px-2.5 py-1 font-mono text-[9px] font-bold uppercase text-black sm:-bottom-4 sm:-right-4 sm:px-3 sm:text-[10px]">
+            <div className="green-pill absolute -bottom-3 -right-2 z-20 max-w-[70%] truncate rounded-full px-2.5 py-1 font-mono text-[9px] font-bold uppercase sm:-bottom-4 sm:-right-4 sm:px-3 sm:text-[10px]">
               {project.category}
             </div>
           </div>

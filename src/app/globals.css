@@ -3,6 +3,15 @@
 
 @source "../**/*.{js,ts,jsx,tsx}";
 
+@theme inline {
+  --color-charcoal-900: #0a0a0a;
+  --color-charcoal-800: #121212;
+  --color-charcoal-700: #1a1a1a;
+  --color-accent-green: var(--accent-green);
+  --color-accent-blue: var(--accent-blue);
+  --color-accent-purple: var(--accent-purple);
+}
+
 :root {
   --background: #ffffff;
   --foreground: #0a0a0a;
@@ -91,6 +100,20 @@
     bottom: max(2.5rem, env(safe-area-inset-bottom));
     z-index: 20;
   }
+
+  /* Green filled chips/buttons — always white label text */
+  .green-pill {
+    background-color: var(--accent-green);
+    color: #ffffff !important;
+  }
+
+  a.green-pill,
+  a.green-pill:hover,
+  a.green-pill:focus,
+  a.green-pill:visited,
+  a.green-pill:active {
+    color: #ffffff !important;
+  }
 }
 
 @layer utilities {
@@ -124,10 +147,6 @@
 
   .text-accent-blue {
     color: var(--accent-blue);
-  }
-
-  .bg-accent-green {
-    background-color: var(--accent-green);
   }
 
   .from-accent-green {
