@@ -11,9 +11,9 @@ export default function Home() {
   const [showHiddenLog, setShowHiddenLog] = useState(false);
 
   return (
-    <main className="bg-[var(--background)] relative">
+    <main className="bg-background relative overflow-x-hidden">
       <Hero />
-      
+
       <div className="relative">
         {projects.map((project, index) => (
           <CaseStudy key={project.id} project={project} index={index} />
@@ -21,26 +21,29 @@ export default function Home() {
       </div>
 
       <IDESection />
-      
-      <footer className="h-[40vh] w-full flex flex-col items-center justify-center bg-[var(--background)] text-center px-4 relative group">
-        <h2 className="text-4xl font-bold text-[var(--foreground)] mb-8 tracking-tighter">Ready to build the next big thing?</h2>
-        <a 
-          href="mailto:your-email@example.com" 
-          className="px-8 py-4 bg-accent-green text-black font-bold rounded-full hover:scale-110 transition-transform duration-300 relative z-10"
+
+      <footer className="min-h-[40vh] w-full flex flex-col items-center justify-center bg-background text-center px-4 sm:px-6 py-16 sm:py-20 relative pb-[max(2rem,env(safe-area-inset-bottom))]">
+        <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold text-foreground mb-6 sm:mb-8 tracking-tighter max-w-xl leading-tight">
+          Ready to build the next big thing?
+        </h2>
+        <a
+          href="mailto:your-email@example.com"
+          className="px-6 sm:px-8 py-3 sm:py-4 text-sm sm:text-base bg-accent-green text-black font-bold rounded-full hover:scale-105 sm:hover:scale-110 transition-transform duration-300 relative z-10"
         >
-          Let's Collaborate
+          Let&apos;s Collaborate
         </a>
-        
-        {/* Hidden Easter Egg Trigger */}
-        <div 
+
+        <button
+          type="button"
           onClick={() => setShowHiddenLog(!showHiddenLog)}
-          className="absolute bottom-4 right-4 w-2 h-2 bg-white/10 rounded-full cursor-help hover:bg-accent-green transition-colors" 
+          className="absolute bottom-4 right-4 w-3 h-3 sm:w-2 sm:h-2 bg-[var(--surface-strong)] rounded-full cursor-help hover:bg-accent-green transition-colors border border-[var(--surface-border)]"
           title="System Log"
+          aria-label="Toggle system log"
         />
 
         <AnimatePresence>
           {showHiddenLog && (
-            <div className="absolute bottom-20 right-10 w-64 p-4 bg-black border border-accent-green/30 rounded-lg font-mono text-[10px] text-accent-green text-left shadow-2xl animate-in fade-in slide-in-from-bottom-4">
+            <div className="absolute bottom-16 left-4 right-4 sm:left-auto sm:right-10 sm:w-64 p-4 bg-black border border-accent-green/30 rounded-lg font-mono text-[10px] text-accent-green text-left shadow-2xl z-20">
               <p className="opacity-50 mb-2">&gt;&gt; system_logs.txt</p>
               <p>v1.0: Stable build</p>
               <p>Animations: GSAP/Lenis</p>
@@ -50,7 +53,7 @@ export default function Home() {
           )}
         </AnimatePresence>
 
-        <p className="mt-12 text-[var(--text-muted)] font-mono text-xs uppercase tracking-widest">
+        <p className="mt-10 sm:mt-12 text-muted font-mono text-[10px] sm:text-xs uppercase tracking-widest px-2">
           © 2026 Onofuevure Charles // All Rights Reserved
         </p>
       </footer>

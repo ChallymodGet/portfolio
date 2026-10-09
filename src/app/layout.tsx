@@ -13,6 +13,12 @@ export const metadata: Metadata = {
   description: "Senior Product Designer bridging the gap between complex business logic and intuitive UX",
 };
 
+export const viewport = {
+  width: "device-width",
+  initialScale: 1,
+  viewportFit: "cover",
+};
+
 export default function RootLayout({
   children,
 }: {

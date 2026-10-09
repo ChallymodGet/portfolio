@@ -54,7 +54,20 @@
     width: 100%;
     min-height: 100%;
     overflow-x: hidden;
+    -webkit-text-size-adjust: 100%;
     transition: background-color 0.3s ease, color 0.3s ease;
+  }
+
+  img,
+  video {
+    max-width: 100%;
+    height: auto;
+  }
+}
+
+@media (pointer: coarse) {
+  .custom-cursor {
+    display: none !important;
   }
 }
 
@@ -69,9 +82,42 @@
     z-index: 10;
     text-align: center;
   }
+
+  /* Critical layout: do not rely on Tailwind utilities alone for scroll cue positioning */
+  .hero-scroll-cue {
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    bottom: max(2.5rem, env(safe-area-inset-bottom));
+    z-index: 20;
+  }
 }
 
 @layer utilities {
+  .text-foreground {
+    color: var(--foreground);
+  }
+
+  .text-muted {
+    color: var(--text-muted);
+  }
+
+  .bg-background {
+    background-color: var(--background);
+  }
+
+  .bg-surface {
+    background-color: var(--surface);
+  }
+
+  .bg-surface-strong {
+    background-color: var(--surface-strong);
+  }
+
+  .border-surface {
+    border-color: var(--surface-border);
+  }
+
   .text-accent-green {
     color: var(--accent-green);
   }
