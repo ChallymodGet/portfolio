@@ -76,7 +76,7 @@ export default function Hero() {
           System Status: Online // Product Architect
         </motion.div>
 
-        <h1 ref={textRef} className="text-4xl sm:text-6xl md:text-8xl font-bold tracking-tighter text-white mb-8" style={{ perspective: "1000px" }}>
+        <h1 ref={textRef} className="text-4xl sm:text-6xl md:text-8xl font-bold tracking-tighter text-[var(--foreground)] mb-8" style={{ perspective: "1000px" }}>
           {splitText("Onofuevure Charles")}
         </h1>
 
@@ -84,10 +84,10 @@ export default function Hero() {
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ delay: 1.5 }}
-          className="max-w-2xl mx-auto text-gray-400 text-base md:text-xl font-light leading-relaxed"
+          className="max-w-2xl mx-auto text-[var(--text-muted)] text-base md:text-xl font-light leading-relaxed"
         >
-          Bridging the gap between <span className="text-white font-medium">complex business logic</span> and 
-          <span className="text-white font-medium"> intuitive user experiences</span> through scalable digital products.
+          Bridging the gap between <span className="text-[var(--foreground)] font-medium">complex business logic</span> and 
+          <span className="text-[var(--foreground)] font-medium"> intuitive user experiences</span> through scalable digital products.
         </motion.p>
 
         <div ref={glassRef} className="mt-12 md:mt-16 relative w-48 h-48 md:w-64 md:h-64 mx-auto">

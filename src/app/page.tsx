@@ -3,7 +3,6 @@
 import Hero from "@/components/canvas/Hero";
 import CaseStudy from "@/components/canvas/CaseStudy";
 import IDESection from "@/components/ide/IDESection";
-import EasterEggs from "@/components/animations/EasterEggs";
 import { projects } from "@/lib/projects";
 import { useState } from "react";
 import { AnimatePresence } from "framer-motion";
@@ -12,8 +11,7 @@ export default function Home() {
   const [showHiddenLog, setShowHiddenLog] = useState(false);
 
   return (
-    <main className="bg-charcoal-900 relative">
-      <EasterEggs />
+    <main className="bg-[var(--background)] relative">
       <Hero />
       
       <div className="relative">
@@ -24,8 +22,8 @@ export default function Home() {
 
       <IDESection />
       
-      <footer className="h-[40vh] w-full flex flex-col items-center justify-center bg-charcoal-900 text-center px-4 relative group">
-        <h2 className="text-4xl font-bold text-white mb-8 tracking-tighter">Ready to build the next big thing?</h2>
+      <footer className="h-[40vh] w-full flex flex-col items-center justify-center bg-[var(--background)] text-center px-4 relative group">
+        <h2 className="text-4xl font-bold text-[var(--foreground)] mb-8 tracking-tighter">Ready to build the next big thing?</h2>
         <a 
           href="mailto:your-email@example.com" 
           className="px-8 py-4 bg-accent-green text-black font-bold rounded-full hover:scale-110 transition-transform duration-300 relative z-10"
