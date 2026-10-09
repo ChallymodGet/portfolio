@@ -50,7 +50,7 @@ export default function Home() {
           )}
         </AnimatePresence>
 
-        <p className="mt-12 text-gray-600 font-mono text-xs uppercase tracking-widest">
+        <p className="mt-12 text-[var(--text-muted)] font-mono text-xs uppercase tracking-widest">
           © 2026 Onofuevure Charles // All Rights Reserved
         </p>
       </footer>

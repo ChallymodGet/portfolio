@@ -25,8 +25,7 @@ export default function ThemeToggle() {
       whileHover={{ scale: 1.1 }}
       whileTap={{ scale: 0.9 }}
       onClick={toggleTheme}
-      className="fixed top-6 right-6 z-[10000] p-3 rounded-full bg-white/10 backdrop-blur-md border border-white/20 shadow-xl transition-colors"
-      style={{ backgroundColor: "var(--ide-bg)", borderColor: "var(--ide-border)" }}
+      className="fixed top-6 right-6 z-[10000] p-3 rounded-full backdrop-blur-md border shadow-xl transition-colors bg-[var(--ide-sidebar)] border-[var(--ide-border)] text-[var(--foreground)]"
     >
       {theme === "dark" ? <Sun size={20} className="text-yellow-400" /> : <Moon size={20} className="text-slate-700" />}
     </motion.button>

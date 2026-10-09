@@ -78,13 +78,13 @@ export default function CaseStudy({ project, index }: CaseStudyProps) {
         <div ref={stickyRef} className="relative z-10 flex justify-center">
           <div className="relative w-full max-w-[500px] aspect-[4/3] group">
             {/* The "Glass" frame for the image */}
-            <div className="absolute inset-0 bg-white/10 backdrop-blur-md border border-white/20 rounded-2xl rotate-3 scale-95 opacity-50 transition-transform group-hover:rotate-0" />
+            <div className="absolute inset-0 bg-[var(--surface-strong)] backdrop-blur-md border border-[var(--surface-border)] rounded-2xl rotate-3 scale-95 opacity-50 transition-transform group-hover:rotate-0" />
             
             <img 
               ref={imgRef}
               src={project.heroImage} 
               alt={project.title}
-              className="relative z-10 w-full h-full object-cover rounded-2xl border border-white/10 shadow-2xl transition-transform duration-700"
+              className="relative z-10 w-full h-full object-cover rounded-2xl border border-[var(--surface-border)] shadow-2xl transition-transform duration-700"
             />
             
             {/* Technical Badge */}
@@ -97,16 +97,16 @@ export default function CaseStudy({ project, index }: CaseStudyProps) {
         {/* RIGHT SIDE: Narrative and Metrics */}
         <div className="relative z-10 space-y-12">
           <div>
-            <h2 className="text-5xl font-bold text-white mb-4 tracking-tighter">{project.title}</h2>
-            <p className="text-gray-400 text-lg leading-relaxed">{project.description}</p>
+            <h2 className="text-5xl font-bold text-[var(--foreground)] mb-4 tracking-tighter">{project.title}</h2>
+            <p className="text-[var(--text-muted)] text-lg leading-relaxed">{project.description}</p>
           </div>
 
           {/* Metrics Grid */}
           <div className="grid grid-cols-2 gap-4">
             {project.metrics.map((m, i) => (
-              <div key={i} className="case-item p-4 bg-white/5 border border-white/10 rounded-xl backdrop-blur-sm">
+              <div key={i} className="case-item p-4 bg-[var(--surface)] border border-[var(--surface-border)] rounded-xl backdrop-blur-sm">
                 <span className="block text-accent-blue font-mono text-xs uppercase mb-1">{m.label}</span>
-                <span className="text-3xl font-bold text-white">{m.value}</span>
+                <span className="text-3xl font-bold text-[var(--foreground)]">{m.value}</span>
               </div>
             ))}
           </div>
@@ -114,11 +114,11 @@ export default function CaseStudy({ project, index }: CaseStudyProps) {
           {/* Challenges Section */}
           <div className="space-y-6">
             {project.challenges.map((c, i) => (
-              <div key={i} className="case-item p-6 bg-white/5 border-l-2 border-accent-green rounded-r-xl backdrop-blur-sm">
+              <div key={i} className="case-item p-6 bg-[var(--surface)] border-l-2 border-accent-green rounded-r-xl backdrop-blur-sm">
                 <p className="text-sm font-mono text-accent-green mb-2 uppercase tracking-widest">The Challenge</p>
-                <p className="text-gray-300 mb-4 italic">"{c.problem}"</p>
+                <p className="text-[var(--text-muted)] mb-4 italic">"{c.problem}"</p>
                 <p className="text-sm font-mono text-accent-blue mb-2 uppercase tracking-widest">The Solution</p>
-                <p className="text-white font-medium">{c.solution}</p>
+                <p className="text-[var(--foreground)] font-medium">{c.solution}</p>
               </div>
             ))}
           </div>

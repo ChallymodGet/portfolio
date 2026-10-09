@@ -65,11 +65,11 @@ export default function CustomCursor() {
         animate={{
           width: cursorState === "hover" ? 60 : cursorState === "text" ? 20 : 30,
           height: cursorState === "hover" ? 60 : cursorState === "text" ? 20 : 30,
-          borderColor: cursorState === "hover" ? "#00ff41" : "#ffffff",
+          borderColor: cursorState === "hover" ? "var(--accent-green)" : "var(--cursor-ring)",
           borderRadius: cursorState === "text" ? "2px" : "50%",
           opacity: cursorState === "text" ? 0.5 : 1,
         }}
-        className="fixed border border-white pointer-events-none z-[9998] transition-colors duration-300 ease-out"
+        className="fixed border border-[var(--cursor-ring)] pointer-events-none z-[9998] transition-colors duration-300 ease-out"
       />
     </>
   );
