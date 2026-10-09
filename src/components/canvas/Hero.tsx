@@ -91,16 +91,16 @@ export default function Hero() {
         </motion.p>
 
         <div ref={glassRef} className="mt-12 md:mt-16 relative w-48 h-48 md:w-64 md:h-64 mx-auto">
-          <div className="absolute inset-0 bg-white/5 backdrop-blur-xl border border-white/20 rounded-3xl rotate-12 shadow-2xl" />
-          <div className="absolute inset-0 bg-gradient-to-br from-white/10 to-transparent backdrop-blur-md border border-white/30 rounded-3xl -rotate-6 shadow-2xl" />
-          <div className="absolute inset-0 flex items-center justify-center text-accent-blue font-mono text-[10px] opacity-50">
+          <div className="absolute inset-0 bg-[var(--surface)] backdrop-blur-xl border border-[var(--surface-border)] rounded-3xl rotate-12 shadow-2xl" />
+          <div className="absolute inset-0 bg-gradient-to-br from-[var(--surface-strong)] to-transparent backdrop-blur-md border border-[var(--surface-border)] rounded-3xl -rotate-6 shadow-2xl" />
+          <div className="absolute inset-0 flex items-center justify-center text-accent-blue font-mono text-[10px] opacity-80">
             [ PROCESS_CORE ]
           </div>
         </div>
       </div>
 
       <div className="absolute bottom-10 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2">
-        <span className="text-[10px] font-mono text-gray-500 uppercase tracking-widest">Scroll to explore</span>
+        <span className="text-[10px] font-mono text-[var(--text-muted)] uppercase tracking-widest">Scroll to explore</span>
         <div className="w-[1px] h-12 bg-gradient-to-b from-accent-green to-transparent" />
       </div>
     </section>
