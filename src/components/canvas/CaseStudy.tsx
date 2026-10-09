@@ -69,9 +69,11 @@ export default function CaseStudy({ project, index }: CaseStudyProps) {
           }
         );
 
-        // Micro-interaction: Subtle Parallax
+        // Combined Micro-interaction: Parallax + Scale Expansion + Contrast
         gsap.to(imgRef.current, {
-          y: -20,
+          y: -30,
+          scale: 1.05,
+          filter: "contrast(1.1) brightness(1.05)",
           scrollTrigger: {
             trigger: section,
             start: "top bottom",
@@ -79,6 +81,35 @@ export default function CaseStudy({ project, index }: CaseStudyProps) {
             scrub: true,
           },
         });
+
+        // Micro-interaction: Mouse-follow Tilt Effect
+        const handleMouseMove = (e: MouseEvent) => {
+          const { left, top, width, height } = imgRef.current!.getBoundingClientRect();
+          const x = (e.clientX - left) / width - 0.5;
+          const y = (e.clientY - top) / height - 0.5;
+
+          gsap.to(imgRef.current, {
+            rotateY: x * 10,
+            rotateX: -y * 10,
+            duration: 0.4,
+            ease: "power2.out",
+          });
+        };
+
+        const handleMouseLeave = () => {
+          gsap.to(imgRef.current, {
+            rotateY: 0,
+            rotateX: 0,
+            duration: 0.4,
+            ease: "power2.out",
+          });
+        };
+
+        imgRef.current.addEventListener("mousemove", handleMouseMove);
+        imgRef.current.addEventListener("mouseleave", handleMouseLeave);
+
+        // Store listeners for cleanup
+        (imgRef.current as any)._listeners = { handleMouseMove, handleMouseLeave };
       }
     }, sectionRef);
 
@@ -88,6 +119,11 @@ export default function CaseStudy({ project, index }: CaseStudyProps) {
     window.addEventListener("resize", onResize);
 
     return () => {
+      if (imgRef.current && (imgRef.current as any)._listeners) {
+        const { handleMouseMove, handleMouseLeave } = (imgRef.current as any)._listeners;
+        imgRef.current.removeEventListener("mousemove", handleMouseMove);
+        imgRef.current.removeEventListener("mouseleave", handleMouseLeave);
+      }
       window.removeEventListener("resize", onResize);
       clearTimeout(timer);
       ctx.revert();
