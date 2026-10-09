@@ -14,19 +14,19 @@ export default function IDESection() {
       name: "profile.ts", 
       icon: <Code2 size={14} />, 
       code: `export const Designer = {\n  name: "Onofuevure Charles",\n  role: "Senior Product Designer",\n  location: "Lagos, Nigeria (Remote)",\n  education: "B.Tech Physics Electronics",\n  experience: "5+ Years",\n  specialization: [\n    "End-to-End Product Design",\n    "UX Strategy",\n    "Design Systems",\n    "Business Logic Transformation"\n  ],\n  mindset: "Analytical, Data-Driven, User-Centric",\n};`,
-      result: "ONOFUEVURE CHARLES\nSenior Product Designer\nLagos, Nigeria | Remote\nB.Tech Physics Electronics\n5+ Years Experience\n\nExpertise: End-to-End Design, UX Strategy, Design Systems"
+      result: "ONOFUEVURE CHARLES\\nSenior Product Designer\\nLagos, Nigeria | Remote\\nB.Tech Physics Electronics\\n5+ Years Experience\\n\\nExpertise: End-to-End Design, UX Strategy, Design Systems"
     },
     { 
-      name: "impact.json", 
+      name: "stack.json", 
       icon: <Database size={14} />, 
-      code: `{\n  "metrics": {\n    "engagement": "+40% (Shkula)",\n    "bounce_rate": "-20% (Shkula)",\n    "adoption": "+25% (Enterprise)",\n    "prototypes": "50+ Production-Ready",\n    "experience": "FinTech, HealthTech, EdTech"\n  },\n  "status": "High-Impact Delivery"\n}`,
-      result: "KEY IMPACT:\n\nEngagement: 40% Increase ↑\nBounce Rate: 20% Decrease ↓\nAdoption: 25% Growth ↑\nPrototypes: 50+ Shipped\nDomains: FinTech, HealthTech, EdTech"
+      code: `{\n  "design": ["Figma", "Adobe CC"],\n  "dev": ["Next.js", "TS"],\n  "motion": ["GSAP", "Framer"],\n  "os": ["MacOS", "Linux"]\n}`,
+      result: "Design: Figma, Adobe CC\\nDev: Next.js, TS\\nMotion: GSAP, Framer\\nOS: MacOS, Linux"
     },
     { 
-      name: "core_stack.md", 
+      name: "metrics.md", 
       icon: <Layers size={14} />, 
-      code: `# Tech Stack\n\n## Design\n- Figma (Advanced), FigJam, Framer, ProtoPie\n\n## Process\n- Agile, Sprint Planning, User Research\n\n## Technical\n- Next.js, TypeScript, Tailwind CSS, GSAP\n\n## AI-Augmented\n- Claude, ChatGPT, Gemini, Relume`,
-      result: "CORE COMPETENCIES:\n\nDesign: Figma, Framer, ProtoPie\nProcess: Agile, UX Research, A/B Testing\nTech: Next.js, TypeScript, GSAP\nAI: Prompt Engineering, Rapid Ideation"
+      code: `# Impact Metrics\n\n- Engagement: +40%\\n- Adoption: +25%\\n- Efficiency: +30%\\n- UX: End-to-End`,
+      result: "CORE IMPACT:\\n\\nEngagement: 40% Increase ↑\\nAdoption: 25% Growth ↑\\nEfficiency: 30% Increase ↑\\nUX: Optimized"
     },
   ];
 
@@ -53,12 +53,12 @@ export default function IDESection() {
   }, [activeTab]);
 
   return (
-    <section className="relative min-h-screen w-full bg-[#0d0d0d] flex items-center justify-center p-4 md:p-12 overflow-hidden">
+    <section className="relative min-h-screen w-full bg-[var(--background)] flex items-center justify-center p-4 md:p-12 overflow-hidden">
       <div className="absolute inset-0 grid-background opacity-10 pointer-events-none" />
       <div className="absolute top-0 right-0 w-96 h-96 bg-accent-purple/10 blur-[120px] rounded-full" />
       
-      <div className="relative w-full max-w-7xl h-[800px] bg-[#1e1e1e] rounded-2xl border border-white/10 shadow-2xl flex flex-col overflow-hidden">
-        <div className="h-12 bg-[#252526] border-b border-white/5 flex items-center justify-between px-4">
+      <div className="relative w-full max-w-7xl h-auto md:h-[800px] bg-[var(--ide-bg)] rounded-2xl border-[var(--ide-border)] shadow-2xl flex flex-col overflow-hidden">
+        <div className="h-12 bg-[var(--ide-sidebar)] border-b [var(--ide-border)] flex items-center justify-between px-4">
           <div className="flex gap-2">
             <div className="w-3 h-3 rounded-full bg-red-500/80" />
             <div className="w-3 h-3 rounded-full bg-yellow-500/80" />
@@ -70,14 +70,14 @@ export default function IDESection() {
           <div className="w-12" />
         </div>
 
-        <div className="flex flex-1 overflow-hidden">
-          <div className="w-64 bg-[#252526] border-r border-white/5 p-4 flex flex-col gap-2">
-            <p className="text-gray-500 font-mono text-[10px] uppercase tracking-widest mb-4">Explorer</p>
+        <div className="flex flex-col md:flex-row flex-1 overflow-hidden">
+          <div className="w-full md:w-64 bg-[var(--ide-sidebar)] border-r [var(--ide-border)] p-4 flex flex-row md:flex-col gap-2 overflow-x-auto">
+            <p className="hidden md:block text-gray-500 font-mono text-[10px] uppercase tracking-widest mb-4">Explorer</p>
             {files.map((file) => (
               <button 
                 key={file.name}
                 onClick={() => setActiveTab(file.name)}
-                className={`flex items-center gap-3 px-2 py-1.5 rounded text-sm font-mono transition-all ${
+                className={`flex items-center gap-3 px-2 py-1.5 rounded text-sm font-mono whitespace-nowrap transition-all ${
                   activeTab === file.name ? "bg-blue-500/20 text-blue-400" : "text-gray-400 hover:bg-white/5"
                 }`}
               >
@@ -86,10 +86,10 @@ export default function IDESection() {
             ))}
           </div>
 
-          <div className="flex-1 flex">
-            <div className="flex-1 bg-[#1e1e1e] p-6 font-mono text-sm relative overflow-hidden">
+          <div className="flex-1 flex flex-col lg:flex-row overflow-hidden">
+            <div className="flex-1 bg-[var(--ide-bg)] p-4 md:p-6 font-mono text-xs md:text-sm relative overflow-hidden">
               <div className="flex gap-4">
-                <div className="text-gray-600 text-right select-none">
+                <div className="text-gray-600 text-right select-none hidden sm:block">
                   {Array.from({ length: 15 }).map((_, i) => (
                     <div key={i}>{i + 1}</div>
                   ))}
@@ -101,8 +101,8 @@ export default function IDESection() {
               </div>
             </div>
 
-            <div className="w-1/3 bg-black/40 border-l border-white/10 p-6 flex flex-col">
-              <div className="flex items-center gap-2 text-gray-500 font-mono text-[10px] uppercase mb-6">
+            <div className="w-full lg:w-1/3 bg-black/20 border-t lg:border-t-0 lg:border-l [var(--ide-border)] p-4 md:p-6 flex flex-col">
+              <div className="flex items-center gap-2 text-gray-500 font-mono text-[10px] uppercase mb-4">
                 <div className="w-2 h-2 rounded-full bg-accent-green animate-pulse" />
                 Live Preview
               </div>
@@ -111,9 +111,9 @@ export default function IDESection() {
                   key={activeTab}
                   initial={{ opacity: 0, scale: 0.9 }}
                   animate={{ opacity: 1, scale: 1 }}
-                  className="w-full p-6 bg-white/5 border border-white/10 rounded-xl backdrop-blur-md"
+                  className="w-full p-4 md:p-6 bg-white/5 border [var(--ide-border)] rounded-xl backdrop-blur-md"
                 >
-                  <pre className="text-white font-sans text-sm leading-relaxed whitespace-pre-wrap">
+                  <pre className="text-white font-sans text-xs md:text-sm leading-relaxed whitespace-pre-wrap">
                     {activeFile.result}
                   </pre>
                 </motion.div>
@@ -122,9 +122,9 @@ export default function IDESection() {
           </div>
         </div>
 
-        <div className="h-32 bg-[#0a0a0a] border-t border-white/10 p-4 font-mono text-xs relative">
+        <div className="h-24 md:h-32 bg-black border-t [var(--ide-border)] p-4 font-mono text-[10px] md:text-xs relative">
           <div className="flex items-center gap-2 text-gray-500 mb-2">
-            <Terminal size={12} /> <span>Terminal - zsh</span>
+            <Terminal size={12} /> <span className="hidden sm:inline">Terminal - zsh</span>
           </div>
           <div className="text-accent-green leading-relaxed">
             <span className="text-white">guest@portfolio:~$</span> {terminalText}
