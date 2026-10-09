@@ -40,9 +40,18 @@ export default function CaseStudy({ project, index }: CaseStudyProps) {
             delay: i * 0.05,
           }
         );
+
+        // Micro-interaction: Hover lift
+        item.addEventListener("mouseenter", () => {
+          gsap.to(item, { y: -4, scale: 1.02, duration: 0.3, ease: "power2.out", borderColor: "var(--accent-blue)" });
+        });
+        item.addEventListener("mouseleave", () => {
+          gsap.to(item, { y: 0, scale: 1, duration: 0.3, ease: "power2.out" });
+        });
       });
 
       if (imgRef.current) {
+        // Entrance animation
         gsap.fromTo(
           imgRef.current,
           { opacity: 0, scale: 0.96, y: 24 },
@@ -59,14 +68,28 @@ export default function CaseStudy({ project, index }: CaseStudyProps) {
             },
           }
         );
+
+        // Micro-interaction: Subtle Parallax
+        gsap.to(imgRef.current, {
+          y: -20,
+          scrollTrigger: {
+            trigger: section,
+            start: "top bottom",
+            end: "bottom top",
+            scrub: true,
+          },
+        });
       }
     }, sectionRef);
 
+    // Ensure ScrollTrigger is aware of final layout
+    const timer = setTimeout(() => ScrollTrigger.refresh(), 500);
     const onResize = () => ScrollTrigger.refresh();
     window.addEventListener("resize", onResize);
 
     return () => {
       window.removeEventListener("resize", onResize);
+      clearTimeout(timer);
       ctx.revert();
     };
   }, []);
@@ -96,7 +119,7 @@ export default function CaseStudy({ project, index }: CaseStudyProps) {
 
             <div className="green-pill absolute -bottom-3 -right-2 z-20 max-w-[70%] truncate rounded-full px-2.5 py-1 font-mono text-[9px] font-bold uppercase sm:-bottom-4 sm:-right-4 sm:px-3 sm:text-[10px]">
               {project.category}
-            </div>
+            </div}
           </div>
         </div>
 
