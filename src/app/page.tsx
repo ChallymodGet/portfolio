@@ -6,6 +6,7 @@ import IDESection from "@/components/ide/IDESection";
 import EasterEggs from "@/components/animations/EasterEggs";
 import { projects } from "@/lib/projects";
 import { useState } from "react";
+import { AnimatePresence } from "framer-motion";
 
 export default function Home() {
   const [showHiddenLog, setShowHiddenLog] = useState(false);
@@ -42,7 +43,7 @@ export default function Home() {
         <AnimatePresence>
           {showHiddenLog && (
             <div className="absolute bottom-20 right-10 w-64 p-4 bg-black border border-accent-green/30 rounded-lg font-mono text-[10px] text-accent-green text-left shadow-2xl animate-in fade-in slide-in-from-bottom-4">
-              <p className="opacity-50 mb-2">>> system_logs.txt</p>
+              <p className="opacity-50 mb-2">&gt;&gt; system_logs.txt</p>
               <p>v1.0: Stable build</p>
               <p>Animations: GSAP/Lenis</p>
               <p>Mood: High-Performance</p>
