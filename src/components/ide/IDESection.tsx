@@ -1,38 +1,44 @@
 "use client";
 
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { motion } from "framer-motion";
 import { Terminal, Code2, Database, Layers } from "lucide-react";
+import gsap from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
+
+gsap.registerPlugin(ScrollTrigger);
+
+const IDE_FILES = [
+  {
+    name: "profile.ts",
+    icon: <Code2 size={14} />,
+    code: `export const Designer = {\n  name: "Onofuevure Charles",\n  role: "Senior Product Designer",\n  location: "Lagos, Nigeria (Remote)",\n  education: "B.Tech Physics Electronics",\n  experience: "5+ Years",\n  specialization: [\n    "End-to-End Product Design",\n    "UX Strategy",\n    "Design Systems",\n    "Business Logic Transformation"\n  ],\n  mindset: "Analytical, Data-Driven, User-Centric",\n};`,
+    result:
+      "ONOFUEVURE CHARLES\nSenior Product Designer\nLagos, Nigeria | Remote\nB.Tech Physics Electronics\n5+ Years Experience\n\nExpertise: End-to-End Design, UX Strategy, Design Systems",
+  },
+  {
+    name: "stack.json",
+    icon: <Database size={14} />,
+    code: `{\n  "design": ["Figma", "Adobe CC"],\n  "dev": ["Next.js", "TS"],\n  "motion": ["GSAP", "Framer"],\n  "os": ["MacOS", "Linux"]\n}`,
+    result: "Design: Figma, Adobe CC\nDev: Next.js, TS\nMotion: GSAP, Framer\nOS: MacOS, Linux",
+  },
+  {
+    name: "metrics.md",
+    icon: <Layers size={14} />,
+    code: `# Impact Metrics\n\n- Engagement: +40%\n- Adoption: +25%\n- Efficiency: +30%\n- UX: End-to-End`,
+    result:
+      "CORE IMPACT:\n\nEngagement: 40% Increase ↑\nAdoption: 25% Growth ↑\nEfficiency: 30% Increase ↑\nUX: Optimized",
+  },
+] as const;
 
 export default function IDESection() {
-  const [activeTab, setActiveTab] = useState<string>("profile.ts");
+  const sectionRef = useRef<HTMLElement>(null);
+  const [activeTab, setActiveTab] = useState<string>(IDE_FILES[0].name);
   const [codeIndex, setCodeIndex] = useState(0);
   const [terminalText, setTerminalText] = useState("");
+  const [scrollTabsEnabled, setScrollTabsEnabled] = useState(false);
 
-  const files = [
-    {
-      name: "profile.ts",
-      icon: <Code2 size={14} />,
-      code: `export const Designer = {\n  name: "Onofuevure Charles",\n  role: "Senior Product Designer",\n  location: "Lagos, Nigeria (Remote)",\n  education: "B.Tech Physics Electronics",\n  experience: "5+ Years",\n  specialization: [\n    "End-to-End Product Design",\n    "UX Strategy",\n    "Design Systems",\n    "Business Logic Transformation"\n  ],\n  mindset: "Analytical, Data-Driven, User-Centric",\n};`,
-      result:
-        "ONOFUEVURE CHARLES\nSenior Product Designer\nLagos, Nigeria | Remote\nB.Tech Physics Electronics\n5+ Years Experience\n\nExpertise: End-to-End Design, UX Strategy, Design Systems",
-    },
-    {
-      name: "stack.json",
-      icon: <Database size={14} />,
-      code: `{\n  "design": ["Figma", "Adobe CC"],\n  "dev": ["Next.js", "TS"],\n  "motion": ["GSAP", "Framer"],\n  "os": ["MacOS", "Linux"]\n}`,
-      result: "Design: Figma, Adobe CC\nDev: Next.js, TS\nMotion: GSAP, Framer\nOS: MacOS, Linux",
-    },
-    {
-      name: "metrics.md",
-      icon: <Layers size={14} />,
-      code: `# Impact Metrics\n\n- Engagement: +40%\n- Adoption: +25%\n- Efficiency: +30%\n- UX: End-to-End`,
-      result:
-        "CORE IMPACT:\n\nEngagement: 40% Increase ↑\nAdoption: 25% Growth ↑\nEfficiency: 30% Increase ↑\nUX: Optimized",
-    },
-  ];
-
-  const activeFile = files.find((f) => f.name === activeTab) || files[0];
+  const activeFile = IDE_FILES.find((f) => f.name === activeTab) || IDE_FILES[0];
 
   useEffect(() => {
     setCodeIndex(0);
@@ -62,12 +68,102 @@ export default function IDESection() {
     return () => clearInterval(interval);
   }, [activeTab]);
 
+  useEffect(() => {
+    const section = sectionRef.current;
+    if (!section) return;
+
+    const desktop = window.matchMedia("(min-width: 1024px)");
+    const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)");
+    const coarsePointer = window.matchMedia("(pointer: coarse)");
+
+    let scrollTrigger: ScrollTrigger | null = null;
+    let ctx: gsap.Context | null = null;
+
+    const enableScrollTabs = () =>
+      desktop.matches && !reducedMotion.matches && !coarsePointer.matches;
+
+    const setup = () => {
+      ctx?.revert();
+      scrollTrigger?.kill();
+      scrollTrigger = null;
+
+      const enabled = enableScrollTabs();
+      setScrollTabsEnabled(enabled);
+      if (!enabled) return;
+
+      const steps = IDE_FILES.length - 1;
+      if (steps <= 0) return;
+
+      ctx = gsap.context(() => {
+        scrollTrigger = ScrollTrigger.create({
+          trigger: section,
+          start: () =>
+            section.offsetHeight <= window.innerHeight ? "bottom bottom" : "top top",
+          end: () => `+=${window.innerHeight * steps}`,
+          pin: true,
+          pinSpacing: true,
+          anticipatePin: 1,
+          scrub: 0.45,
+          invalidateOnRefresh: true,
+          snap: {
+            snapTo: (progress) => Math.round(progress * steps) / steps,
+            duration: { min: 0.15, max: 0.35 },
+            delay: 0.05,
+          },
+          onUpdate: (self) => {
+            const idx = Math.round(self.progress * steps);
+            const name = IDE_FILES[idx]?.name ?? IDE_FILES[0].name;
+            setActiveTab((prev) => (prev === name ? prev : name));
+          },
+        });
+      }, section);
+
+      ScrollTrigger.refresh();
+    };
+
+    setup();
+
+    const onMediaChange = () => setup();
+    desktop.addEventListener("change", onMediaChange);
+    reducedMotion.addEventListener("change", onMediaChange);
+    coarsePointer.addEventListener("change", onMediaChange);
+    window.addEventListener("resize", onMediaChange);
+
+    return () => {
+      desktop.removeEventListener("change", onMediaChange);
+      reducedMotion.removeEventListener("change", onMediaChange);
+      coarsePointer.removeEventListener("change", onMediaChange);
+      window.removeEventListener("resize", onMediaChange);
+      scrollTrigger?.kill();
+      ctx?.revert();
+    };
+  }, []);
+
+  const selectTab = (name: string) => {
+    setActiveTab(name);
+    if (!scrollTabsEnabled || !sectionRef.current) return;
+
+    const steps = IDE_FILES.length - 1;
+    const idx = IDE_FILES.findIndex((f) => f.name === name);
+    if (idx < 0 || steps <= 0) return;
+
+    const st = ScrollTrigger.getAll().find((t) => t.trigger === sectionRef.current);
+    if (!st) return;
+
+    const progress = idx / steps;
+    const scrollPos = st.start + (st.end - st.start) * progress;
+    window.scrollTo({ top: scrollPos, behavior: "smooth" });
+  };
+
   return (
-    <section className="relative w-full bg-[var(--background)] flex items-center justify-center px-3 sm:px-4 md:px-12 py-12 sm:py-16 md:py-20 overflow-hidden">
+    <section
+      ref={sectionRef}
+      className="relative z-[2] w-full bg-[var(--background)] flex items-center justify-center px-3 sm:px-4 md:px-12 py-12 sm:py-16 md:py-20 overflow-hidden min-h-[100dvh] lg:min-h-0"
+    >
       <div className="absolute inset-0 grid-background opacity-10 pointer-events-none" />
       <div className="absolute top-0 right-0 w-64 sm:w-96 h-64 sm:h-96 bg-accent-purple/10 blur-[120px] rounded-full" />
 
-      <div className="relative w-full max-w-7xl min-h-0 lg:h-[800px] bg-[var(--ide-bg)] rounded-xl sm:rounded-2xl border border-[var(--ide-border)] shadow-2xl flex flex-col overflow-hidden">
+      <div className="relative w-full max-w-7xl min-h-0 lg:h-[min(800px,calc(100dvh-4rem))] bg-[var(--ide-bg)] rounded-xl sm:rounded-2xl border border-[var(--ide-border)] shadow-2xl flex flex-col overflow-hidden">
         <div className="h-10 sm:h-12 shrink-0 bg-[var(--ide-sidebar)] border-b border-[var(--ide-border)] flex items-center justify-between px-3 sm:px-4 gap-2">
           <div className="flex gap-1.5 sm:gap-2 shrink-0">
             <div className="w-2.5 h-2.5 sm:w-3 sm:h-3 rounded-full bg-red-500/80" />
@@ -87,11 +183,11 @@ export default function IDESection() {
             <p className="hidden md:block text-[var(--text-muted)] font-mono text-[10px] uppercase tracking-widest mb-2 md:mb-4">
               Explorer
             </p>
-            {files.map((file) => (
+            {IDE_FILES.map((file) => (
               <button
                 key={file.name}
                 type="button"
-                onClick={() => setActiveTab(file.name)}
+                onClick={() => selectTab(file.name)}
                 className={`flex items-center gap-2 sm:gap-3 px-2.5 py-1.5 rounded text-xs sm:text-sm font-mono whitespace-nowrap transition-all shrink-0 ${
                   activeTab === file.name
                     ? "bg-blue-500/20 text-[var(--accent-blue)]"

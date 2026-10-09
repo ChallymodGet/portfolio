@@ -80,6 +80,38 @@
   }
 }
 
+/* Unlayered: theme-specific label colors (avoid bundler inlining CSS vars) */
+.green-pill,
+a.green-pill,
+a.green-pill:hover,
+a.green-pill:focus,
+a.green-pill:visited,
+a.green-pill:active {
+  background-color: var(--accent-green);
+}
+
+[data-theme="light"] .green-pill,
+[data-theme="light"] a.green-pill,
+[data-theme="light"] a.green-pill:hover,
+[data-theme="light"] a.green-pill:focus,
+[data-theme="light"] a.green-pill:visited,
+[data-theme="light"] a.green-pill:active,
+[data-theme="light"] .bg-accent-green:not(.text-accent-green) {
+  color: #ffffff !important;
+  -webkit-text-fill-color: #ffffff !important;
+}
+
+[data-theme="dark"] .green-pill,
+[data-theme="dark"] a.green-pill,
+[data-theme="dark"] a.green-pill:hover,
+[data-theme="dark"] a.green-pill:focus,
+[data-theme="dark"] a.green-pill:visited,
+[data-theme="dark"] a.green-pill:active,
+[data-theme="dark"] .bg-accent-green:not(.text-accent-green) {
+  color: #0a0a0a !important;
+  -webkit-text-fill-color: #0a0a0a !important;
+}
+
 @layer components {
   .grid-background {
     background-image: radial-gradient(circle, var(--grid-color) 1px, transparent 1px);
@@ -101,19 +133,6 @@
     z-index: 20;
   }
 
-  /* Green filled chips/buttons — always white label text */
-  .green-pill {
-    background-color: var(--accent-green);
-    color: #ffffff !important;
-  }
-
-  a.green-pill,
-  a.green-pill:hover,
-  a.green-pill:focus,
-  a.green-pill:visited,
-  a.green-pill:active {
-    color: #ffffff !important;
-  }
 }
 
 @layer utilities {
