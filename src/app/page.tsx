@@ -11,7 +11,7 @@ export default function Home() {
   const [showHiddenLog, setShowHiddenLog] = useState(false);
 
   return (
-    <main className="bg-background relative overflow-x-hidden">
+    <main className="page-canvas relative overflow-x-hidden">
       <Hero />
 
       <div className="relative isolate">
@@ -22,7 +22,7 @@ export default function Home() {
 
       <IDESection />
 
-      <footer className="min-h-[40vh] w-full flex flex-col items-center justify-center bg-background text-center px-4 sm:px-6 py-16 sm:py-20 relative pb-[max(2rem,env(safe-area-inset-bottom))]">
+      <footer className="min-h-[40vh] w-full flex flex-col items-center justify-center bg-section-alt text-center px-4 sm:px-6 py-16 sm:py-20 relative pb-[max(2rem,env(safe-area-inset-bottom))] border-t border-surface">
         <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold text-foreground mb-6 sm:mb-8 tracking-tighter max-w-xl leading-tight">
           Ready to build the next big thing?
         </h2>

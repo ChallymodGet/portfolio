@@ -67,9 +67,9 @@ export default function Hero() {
       ref={containerRef}
       className="relative min-h-[100dvh] w-full flex items-center justify-center overflow-hidden bg-background px-4 sm:px-6 pt-[max(1rem,env(safe-area-inset-top))] pb-28 sm:pb-32"
     >
-      <div className="absolute inset-0 grid-background opacity-30 pointer-events-none" />
-      <div className="absolute top-[-10%] left-[-10%] w-[40%] h-[40%] bg-accent-blue/10 blur-[120px] rounded-full" />
-      <div className="absolute bottom-[-10%] right-[-10%] w-[40%] h-[40%] bg-accent-purple/10 blur-[120px] rounded-full" />
+      <div className="absolute inset-0 grid-background hero-grid pointer-events-none" />
+      <div className="absolute top-[-10%] left-[-10%] w-[40%] h-[40%] hero-glow-blue blur-[120px] rounded-full" />
+      <div className="absolute bottom-[-10%] right-[-10%] w-[40%] h-[40%] hero-glow-purple blur-[120px] rounded-full" />
 
       <div className="hero-content z-10 text-center w-full max-w-5xl mx-auto">
         <motion.div

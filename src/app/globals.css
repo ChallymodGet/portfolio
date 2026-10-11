@@ -13,26 +13,35 @@
 }
 
 :root {
-  --background: #ffffff;
+  --background: #f3f6fb;
+  --background-elevated: #ffffff;
+  --section-alt: #e8eef6;
   --foreground: #0a0a0a;
   --accent-green: #00a334;
   --accent-blue: #0070f3;
   --accent-purple: #7928ca;
-  --ide-bg: #f5f5f5;
-  --ide-sidebar: #ebebeb;
-  --ide-border: #d1d1d1;
-  --text-muted: #52525b;
-  --surface: rgba(0, 0, 0, 0.04);
-  --surface-strong: rgba(0, 0, 0, 0.07);
-  --surface-border: rgba(0, 0, 0, 0.12);
-  --ide-preview-panel: rgba(0, 0, 0, 0.04);
-  --ide-tab-hover: rgba(0, 0, 0, 0.06);
+  --ide-bg: #f8fafc;
+  --ide-sidebar: #eef2f7;
+  --ide-border: #cfd8e6;
+  --text-muted: #475569;
+  --surface: rgba(255, 255, 255, 0.78);
+  --surface-strong: rgba(255, 255, 255, 0.95);
+  --surface-border: rgba(15, 23, 42, 0.1);
+  --ide-preview-panel: rgba(255, 255, 255, 0.65);
+  --ide-tab-hover: rgba(0, 112, 243, 0.08);
   --cursor-ring: rgba(0, 0, 0, 0.35);
-  --grid-color: rgba(0, 0, 0, 0.05);
+  --grid-color: rgba(15, 23, 42, 0.07);
+  --glow-blue: rgba(0, 112, 243, 0.16);
+  --glow-purple: rgba(121, 40, 202, 0.14);
+  --glow-green: rgba(0, 163, 52, 0.1);
+  --hero-grid-opacity: 0.45;
+  --case-glow-opacity: 0.14;
 }
 
 [data-theme="dark"] {
   --background: #0a0a0a;
+  --background-elevated: #121212;
+  --section-alt: #101010;
   --foreground: #ededed;
   --accent-green: #00ff41;
   --accent-blue: #00d1ff;
@@ -48,6 +57,11 @@
   --ide-tab-hover: rgba(255, 255, 255, 0.05);
   --cursor-ring: rgba(255, 255, 255, 0.85);
   --grid-color: rgba(255, 255, 255, 0.1);
+  --glow-blue: rgba(0, 209, 255, 0.12);
+  --glow-purple: rgba(188, 19, 254, 0.12);
+  --glow-green: rgba(0, 255, 65, 0.08);
+  --hero-grid-opacity: 0.3;
+  --case-glow-opacity: 0.05;
 }
 
 @layer base {
@@ -113,9 +127,38 @@ a.green-pill:active {
 }
 
 @layer components {
+  .page-canvas {
+    background-color: var(--background);
+  }
+
+  [data-theme="light"] .page-canvas {
+    background-image:
+      radial-gradient(1100px 520px at 8% -5%, var(--glow-blue), transparent 58%),
+      radial-gradient(900px 480px at 92% 12%, var(--glow-purple), transparent 55%),
+      radial-gradient(700px 400px at 50% 100%, var(--glow-green), transparent 60%);
+    background-color: var(--background);
+  }
+
   .grid-background {
     background-image: radial-gradient(circle, var(--grid-color) 1px, transparent 1px);
     background-size: 30px 30px;
+  }
+
+  .hero-grid {
+    opacity: var(--hero-grid-opacity);
+  }
+
+  .hero-glow-blue {
+    background-color: var(--glow-blue);
+  }
+
+  .hero-glow-purple {
+    background-color: var(--glow-purple);
+  }
+
+  .case-glow {
+    background-color: var(--glow-blue);
+    opacity: var(--case-glow-opacity);
   }
 
   .hero-content {
@@ -146,6 +189,14 @@ a.green-pill:active {
 
   .bg-background {
     background-color: var(--background);
+  }
+
+  .bg-section-alt {
+    background-color: var(--section-alt);
+  }
+
+  .bg-elevated {
+    background-color: var(--background-elevated);
   }
 
   .bg-surface {
