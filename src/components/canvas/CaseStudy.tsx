@@ -133,11 +133,13 @@ export default function CaseStudy({ project, index }: CaseStudyProps) {
   return (
     <section
       ref={sectionRef}
-      className="relative isolate w-full overflow-hidden border-b border-surface bg-background scroll-mt-24"
+      className={`relative isolate w-full overflow-hidden border-b border-surface scroll-mt-24 ${
+        index % 2 === 0 ? "bg-background" : "bg-section-alt"
+      }`}
       style={{ zIndex: index + 1 }}
     >
       <div
-        className="pointer-events-none absolute inset-x-0 top-1/2 mx-auto h-[min(600px,80vw)] w-[min(600px,80vw)] -translate-y-1/2 rounded-full bg-accent-blue/5 blur-[120px]"
+        className="case-glow pointer-events-none absolute inset-x-0 top-1/2 mx-auto h-[min(600px,80vw)] w-[min(600px,80vw)] -translate-y-1/2 rounded-full blur-[120px]"
         aria-hidden
       />
 
