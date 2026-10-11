@@ -12,9 +12,9 @@ const IDE_FILES = [
   {
     name: "profile.ts",
     icon: <Code2 size={14} />,
-    code: `export const Designer = {\n  name: "Onofuevure Charles",\n  role: "Senior Product Designer",\n  location: "Lagos, Nigeria (Remote)",\n  education: "B.Tech Physics Electronics",\n  experience: "5+ Years",\n  specialization: [\n    "End-to-End Product Design",\n    "UX Strategy",\n    "Design Systems",\n    "Business Logic Transformation"\n  ],\n  mindset: "Analytical, Data-Driven, User-Centric",\n};`,
+    code: `export const Designer = {\n  name: "Onofuevure Charles",\n  role: "Senior Product Designer",\n  email: "modgetdesigns@gmail.com",\n  location: "Lagos, Nigeria (Remote)",\n  education: "B.Tech Physics Electronics",\n  experience: "5+ Years",\n  specialization: [\n    "End-to-End Product Design",\n    "UX Strategy",\n    "Design Systems",\n    "Business Logic Transformation"\n  ],\n  mindset: "Analytical, Data-Driven, User-Centric",\n};`,
     result:
-      "ONOFUEVURE CHARLES\nSenior Product Designer\nLagos, Nigeria | Remote\nB.Tech Physics Electronics\n5+ Years Experience\n\nExpertise: End-to-End Design, UX Strategy, Design Systems",
+      "ONOFUEVURE CHARLES\nSenior Product Designer\nmodgetdesigns@gmail.com\nLagos, Nigeria | Remote\nB.Tech Physics Electronics\n5+ Years Experience\n\nExpertise: End-to-End Design, UX Strategy, Design Systems",
   },
   {
     name: "stack.json",

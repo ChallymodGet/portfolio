@@ -27,7 +27,9 @@ export default function Home() {
           Ready to build the next big thing?
         </h2>
         <a
-          href="mailto:your-email@example.com"
+          href="https://calendly.com/modgetdesigns/30min"
+          target="_blank"
+          rel="noopener noreferrer"
           className="green-pill px-6 sm:px-8 py-3 sm:py-4 text-sm sm:text-base font-bold rounded-full hover:scale-105 sm:hover:scale-110 transition-transform duration-300 relative z-10"
         >
           Let&apos;s Collaborate
