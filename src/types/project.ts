@@ -15,4 +15,6 @@ export interface Project {
     solution: string;
   }[];
   techStack: string[];
+  /** Behance embed iframe src; opens in-site modal when set */
+  behanceEmbedUrl?: string;
 }

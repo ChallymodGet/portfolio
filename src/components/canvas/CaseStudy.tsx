@@ -1,9 +1,11 @@
 "use client";
 
-import React, { useEffect, useRef } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
+import { ExternalLink } from "lucide-react";
 import { Project } from "@/types/project";
+import BehanceEmbedModal from "@/components/canvas/BehanceEmbedModal";
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -15,6 +17,7 @@ interface CaseStudyProps {
 export default function CaseStudy({ project, index }: CaseStudyProps) {
   const sectionRef = useRef<HTMLDivElement>(null);
   const imgRef = useRef<HTMLImageElement>(null);
+  const [behanceOpen, setBehanceOpen] = useState(false);
 
   useEffect(() => {
     const section = sectionRef.current;
@@ -190,6 +193,17 @@ export default function CaseStudy({ project, index }: CaseStudyProps) {
             ))}
           </div>
 
+          {project.behanceEmbedUrl && (
+            <button
+              type="button"
+              onClick={() => setBehanceOpen(true)}
+              className="inline-flex w-full sm:w-auto items-center justify-center gap-2 rounded-full border border-surface bg-surface-strong px-5 py-3 text-sm font-semibold text-foreground transition-transform hover:scale-[1.02] hover:border-[var(--accent-blue)]"
+            >
+              View full case study
+              <ExternalLink size={16} className="text-accent-blue" aria-hidden />
+            </button>
+          )}
+
           <div className="space-y-4 sm:space-y-6">
             {project.challenges.map((c, i) => (
               <div
@@ -213,6 +227,15 @@ export default function CaseStudy({ project, index }: CaseStudyProps) {
           </div>
         </div>
       </div>
+
+      {project.behanceEmbedUrl && (
+        <BehanceEmbedModal
+          open={behanceOpen}
+          title={project.title}
+          embedUrl={project.behanceEmbedUrl}
+          onClose={() => setBehanceOpen(false)}
+        />
+      )}
     </section>
   );
 }

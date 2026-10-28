@@ -18,6 +18,7 @@ export const projects: Project[] = [
       { problem: "Complex course navigation.", solution: "Implemented a modular 'Learning Path' UI that allows students to track progress visually." },
     ],
     techStack: ["Figma", "Next.js", "TypeScript"],
+    behanceEmbedUrl: "https://www.behance.net/embed/project/237364663?ilo0=1",
   },
   {
     id: "nbioteck",
@@ -36,6 +37,7 @@ export const projects: Project[] = [
       { problem: "Data heavy medical records.", solution: "Designed a 'Quick-View' summary panel to reduce cognitive load for clinicians." },
     ],
     techStack: ["Figma", "React", "Tailwind"],
+    behanceEmbedUrl: "https://www.behance.net/embed/project/237128789?ilo0=1",
   },
   {
     id: "lumely",
