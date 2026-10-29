@@ -4,6 +4,8 @@ import { caseStudiesQuery, ideTabsQuery } from "@/lib/sanity.queries";
 import type { IdeTabContent, IdeTabKey } from "@/types/ide";
 import type { Project } from "@/types/project";
 import { getDefaultIdeTabs } from "@/lib/ideDefaults";
+import { unstable_cache } from "next/cache";
+import { isSanityConfigured, sanityDataset, sanityProjectId } from "../../sanity/env";
 
 type SanityCaseStudy = Omit<Project, "id" | "wireframeImage" | "finalImage"> & {
   id: string;
@@ -57,11 +59,13 @@ function mapIdeTab(doc: SanityIdeTab): IdeTabContent | null {
   };
 }
 
-export async function getCaseStudies(): Promise<Project[]> {
+async function loadCaseStudiesFromSanity(): Promise<Project[]> {
   if (!sanityClient) return fallbackProjects;
 
   try {
-    const docs = await sanityClient.fetch<SanityCaseStudy[]>(caseStudiesQuery);
+    const docs = await sanityClient.fetch<SanityCaseStudy[]>(caseStudiesQuery, {}, {
+      next: { revalidate: 60, tags: ["sanity", "caseStudy"] },
+    });
     if (!docs?.length) return fallbackProjects;
 
     const mapped = docs.map(mapCaseStudy).filter((p): p is Project => p !== null);
@@ -71,12 +75,14 @@ export async function getCaseStudies(): Promise<Project[]> {
   }
 }
 
-export async function getIdeTabs(): Promise<IdeTabContent[]> {
+async function loadIdeTabsFromSanity(): Promise<IdeTabContent[]> {
   const fallback = getDefaultIdeTabs();
   if (!sanityClient) return fallback;
 
   try {
-    const docs = await sanityClient.fetch<SanityIdeTab[]>(ideTabsQuery);
+    const docs = await sanityClient.fetch<SanityIdeTab[]>(ideTabsQuery, {}, {
+      next: { revalidate: 60, tags: ["sanity", "ideTab"] },
+    });
     if (!docs?.length) return fallback;
 
     const mapped = docs.map(mapIdeTab).filter((t): t is IdeTabContent => t !== null);
@@ -84,4 +90,26 @@ export async function getIdeTabs(): Promise<IdeTabContent[]> {
   } catch {
     return fallback;
   }
+}
+
+const getCachedCaseStudies = unstable_cache(
+  loadCaseStudiesFromSanity,
+  ["sanity-case-studies", sanityProjectId ?? "none", sanityDataset],
+  { revalidate: 60, tags: ["sanity", "caseStudy"] },
+);
+
+const getCachedIdeTabs = unstable_cache(
+  loadIdeTabsFromSanity,
+  ["sanity-ide-tabs", sanityProjectId ?? "none", sanityDataset],
+  { revalidate: 60, tags: ["sanity", "ideTab"] },
+);
+
+export async function getCaseStudies(): Promise<Project[]> {
+  if (!isSanityConfigured) return fallbackProjects;
+  return getCachedCaseStudies();
+}
+
+export async function getIdeTabs(): Promise<IdeTabContent[]> {
+  if (!isSanityConfigured) return getDefaultIdeTabs();
+  return getCachedIdeTabs();
 }
