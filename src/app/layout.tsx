@@ -5,7 +5,6 @@ import SmoothScroll from "@/components/animations/SmoothScroll";
 import CustomCursor from "@/components/animations/CustomCursor";
 import EasterEggs from "@/components/animations/EasterEggs";
 import ThemeToggle from "@/components/animations/ThemeToggle";
-import ChewScrollEffect from "@/components/animations/ChewScrollEffect";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -39,7 +38,6 @@ export default function RootLayout({
         <EasterEggs />
         <CustomCursor />
         <SmoothScroll>
-          <ChewScrollEffect />
           {children}
         </SmoothScroll>
       </body>

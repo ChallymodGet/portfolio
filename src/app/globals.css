@@ -94,14 +94,6 @@
   }
 }
 
-.chew-scroll-teeth {
-  filter: drop-shadow(0 0 12px color-mix(in oklab, var(--accent-green) 35%, transparent));
-}
-
-[data-theme="light"] .chew-scroll-teeth {
-  filter: drop-shadow(0 2px 8px rgba(15, 23, 42, 0.12));
-}
-
 /* Unlayered: theme-specific label colors (avoid bundler inlining CSS vars) */
 .green-pill,
 a.green-pill,
