@@ -1,0 +1,5 @@
+#!/bin/sh
+# Strip Co-authored-by trailers (Cursor / agents must not co-author commits).
+MSG_FILE=$1
+[ -f "$MSG_FILE" ] || exit 0
+grep -vi '^co-authored-by:' "$MSG_FILE" > "${MSG_FILE}.tmp" && mv "${MSG_FILE}.tmp" "$MSG_FILE"

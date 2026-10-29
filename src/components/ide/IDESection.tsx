@@ -1,44 +1,48 @@
 "use client";
 
-import React, { useEffect, useRef, useState } from "react";
+import React, { useEffect, useMemo, useRef, useState, type ReactNode } from "react";
 import { motion } from "framer-motion";
 import { Terminal, Code2, Database, Layers } from "lucide-react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
+import type { IdeTabContent, IdeTabKey } from "@/types/ide";
+import { getDefaultIdeTabs } from "@/lib/ideDefaults";
 
 gsap.registerPlugin(ScrollTrigger);
 
-const IDE_FILES = [
-  {
-    name: "profile.ts",
-    icon: <Code2 size={14} />,
-    code: `export const Designer = {\n  name: "Onofuevure Charles",\n  role: "Senior Product Designer",\n  email: "modgetdesigns@gmail.com",\n  location: "Lagos, Nigeria (Remote)",\n  education: "B.Tech Physics Electronics",\n  experience: "5+ Years",\n  specialization: [\n    "End-to-End Product Design",\n    "UX Strategy",\n    "Design Systems",\n    "Business Logic Transformation"\n  ],\n  mindset: "Analytical, Data-Driven, User-Centric",\n};`,
-    result:
-      "ONOFUEVURE CHARLES\nSenior Product Designer\nmodgetdesigns@gmail.com\nLagos, Nigeria | Remote\nB.Tech Physics Electronics\n5+ Years Experience\n\nExpertise: End-to-End Design, UX Strategy, Design Systems",
-  },
-  {
-    name: "stack.json",
-    icon: <Database size={14} />,
-    code: `{\n  "design": ["Figma", "Adobe CC"],\n  "dev": ["Next.js", "TS"],\n  "motion": ["GSAP", "Framer"],\n  "os": ["MacOS", "Linux"]\n}`,
-    result: "Design: Figma, Adobe CC\nDev: Next.js, TS\nMotion: GSAP, Framer\nOS: MacOS, Linux",
-  },
-  {
-    name: "metrics.md",
-    icon: <Layers size={14} />,
-    code: `# Impact Metrics\n\n- Engagement: +40%\n- Adoption: +25%\n- Efficiency: +30%\n- UX: End-to-End`,
-    result:
-      "CORE IMPACT:\n\nEngagement: 40% Increase ↑\nAdoption: 25% Growth ↑\nEfficiency: 30% Increase ↑\nUX: Optimized",
-  },
-] as const;
+function tabIcon(tabKey: IdeTabKey) {
+  switch (tabKey) {
+    case "stack":
+      return <Database size={14} />;
+    case "metrics":
+      return <Layers size={14} />;
+    default:
+      return <Code2 size={14} />;
+  }
+}
 
-export default function IDESection() {
+type IdePanel = IdeTabContent & { icon: ReactNode };
+
+function toPanels(tabs: IdeTabContent[]): IdePanel[] {
+  return tabs.map((tab) => ({ ...tab, icon: tabIcon(tab.tabKey) }));
+}
+
+interface IDESectionProps {
+  ideTabs?: IdeTabContent[];
+}
+
+export default function IDESection({ ideTabs }: IDESectionProps) {
+  const panels = useMemo(
+    () => toPanels(ideTabs?.length ? ideTabs : getDefaultIdeTabs()),
+    [ideTabs],
+  );
   const sectionRef = useRef<HTMLElement>(null);
-  const [activeTab, setActiveTab] = useState<string>(IDE_FILES[0].name);
+  const [activeTab, setActiveTab] = useState<string>(panels[0]?.fileName ?? "profile.ts");
   const [codeIndex, setCodeIndex] = useState(0);
   const [terminalText, setTerminalText] = useState("");
   const [scrollTabsEnabled, setScrollTabsEnabled] = useState(false);
 
-  const activeFile = IDE_FILES.find((f) => f.name === activeTab) || IDE_FILES[0];
+  const activeFile = panels.find((f) => f.fileName === activeTab) || panels[0];
 
   useEffect(() => {
     setCodeIndex(0);
@@ -91,7 +95,7 @@ export default function IDESection() {
       setScrollTabsEnabled(enabled);
       if (!enabled) return;
 
-      const steps = IDE_FILES.length - 1;
+      const steps = panels.length - 1;
       if (steps <= 0) return;
 
       ctx = gsap.context(() => {
@@ -112,8 +116,8 @@ export default function IDESection() {
           },
           onUpdate: (self) => {
             const idx = Math.round(self.progress * steps);
-            const name = IDE_FILES[idx]?.name ?? IDE_FILES[0].name;
-            setActiveTab((prev) => (prev === name ? prev : name));
+            const name = panels[idx]?.fileName ?? panels[0]?.fileName;
+            if (name) setActiveTab((prev) => (prev === name ? prev : name));
           },
         });
       }, section);
@@ -137,14 +141,14 @@ export default function IDESection() {
       scrollTrigger?.kill();
       ctx?.revert();
     };
-  }, []);
+  }, [panels]);
 
   const selectTab = (name: string) => {
     setActiveTab(name);
     if (!scrollTabsEnabled || !sectionRef.current) return;
 
-    const steps = IDE_FILES.length - 1;
-    const idx = IDE_FILES.findIndex((f) => f.name === name);
+    const steps = panels.length - 1;
+    const idx = panels.findIndex((f) => f.fileName === name);
     if (idx < 0 || steps <= 0) return;
 
     const st = ScrollTrigger.getAll().find((t) => t.trigger === sectionRef.current);
@@ -183,18 +187,18 @@ export default function IDESection() {
             <p className="hidden md:block text-[var(--text-muted)] font-mono text-[10px] uppercase tracking-widest mb-2 md:mb-4">
               Explorer
             </p>
-            {IDE_FILES.map((file) => (
+            {panels.map((file) => (
               <button
-                key={file.name}
+                key={file.fileName}
                 type="button"
-                onClick={() => selectTab(file.name)}
+                onClick={() => selectTab(file.fileName)}
                 className={`flex items-center gap-2 sm:gap-3 px-2.5 py-1.5 rounded text-xs sm:text-sm font-mono whitespace-nowrap transition-all shrink-0 ${
-                  activeTab === file.name
+                  activeTab === file.fileName
                     ? "bg-blue-500/20 text-[var(--accent-blue)]"
                     : "text-[var(--text-muted)] hover:bg-[var(--ide-tab-hover)]"
                 }`}
               >
-                {file.icon} {file.name}
+                {file.icon} {file.fileName}
               </button>
             ))}
           </div>
@@ -227,7 +231,7 @@ export default function IDESection() {
                   className="w-full p-3 sm:p-4 md:p-6 bg-[var(--surface)] border border-[var(--ide-border)] rounded-xl backdrop-blur-md max-h-full overflow-auto"
                 >
                   <pre className="text-[var(--foreground)] font-sans text-xs sm:text-sm leading-relaxed whitespace-pre-wrap break-words">
-                    {activeFile.result}
+                    {activeFile.preview}
                   </pre>
                 </motion.div>
               </div>

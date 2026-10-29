@@ -11,6 +11,7 @@
   },
   "dependencies": {
     "@gsap/react": "latest",
+    "@sanity/vision": "^6.20.0",
     "@tailwindcss/postcss": "^4.3.3",
     "@tailwindcss/turbopack": "^4.3.3",
     "clsx": "latest",
@@ -19,8 +20,10 @@
     "lenis": "latest",
     "lucide-react": "latest",
     "next": "^16.4.3",
+    "next-sanity": "^13.4.0",
     "react": "latest",
     "react-dom": "latest",
+    "sanity": "^6.20.0",
     "tailwind-merge": "latest"
   },
   "devDependencies": {

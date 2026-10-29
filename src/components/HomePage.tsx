@@ -3,11 +3,17 @@
 import Hero from "@/components/canvas/Hero";
 import CaseStudy from "@/components/canvas/CaseStudy";
 import IDESection from "@/components/ide/IDESection";
-import { projects } from "@/lib/projects";
+import type { IdeTabContent } from "@/types/ide";
+import type { Project } from "@/types/project";
 import { useState } from "react";
 import { AnimatePresence } from "framer-motion";
 
-export default function Home() {
+interface HomePageProps {
+  projects: Project[];
+  ideTabs: IdeTabContent[];
+}
+
+export default function HomePage({ projects, ideTabs }: HomePageProps) {
   const [showHiddenLog, setShowHiddenLog] = useState(false);
 
   return (
@@ -20,7 +26,7 @@ export default function Home() {
         ))}
       </div>
 
-      <IDESection />
+      <IDESection ideTabs={ideTabs} />
 
       <footer className="min-h-[40vh] w-full flex flex-col items-center justify-center bg-section-alt text-center px-4 sm:px-6 py-16 sm:py-20 relative pb-[max(2rem,env(safe-area-inset-bottom))] border-t border-surface">
         <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold text-foreground mb-6 sm:mb-8 tracking-tighter max-w-xl leading-tight">

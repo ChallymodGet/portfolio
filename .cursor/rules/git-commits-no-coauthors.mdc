@@ -1,0 +1,11 @@
+---
+description: Git commits must not include Co-authored-by trailers
+alwaysApply: true
+---
+
+# Git commits
+
+When creating git commits for this repository:
+
+- Never add `Co-authored-by` lines or any co-author trailers to commit messages.
+- Use a single concise subject (and optional body) only — the human project owner is the sole author.
