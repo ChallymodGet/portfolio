@@ -137,7 +137,7 @@ export default function CaseStudy({ project, index }: CaseStudyProps) {
   return (
     <section
       ref={sectionRef}
-      className={`relative isolate w-full overflow-x-clip border-b border-surface scroll-mt-24 ${
+      className={`relative isolate w-full overflow-x-clip border-b border-surface scroll-mt-24 px-3 sm:px-4 md:px-12 ${
         index % 2 === 0 ? "bg-background" : "bg-section-alt"
       }`}
       style={{ zIndex: index + 1 }}
@@ -147,7 +147,7 @@ export default function CaseStudy({ project, index }: CaseStudyProps) {
         aria-hidden
       />
 
-      <div className="relative z-10 mx-auto flex w-full max-w-7xl flex-col justify-center px-3 py-14 sm:px-4 sm:py-16 md:px-12 md:py-20 lg:grid lg:grid-cols-[minmax(0,0.92fr)_minmax(0,1.28fr)] lg:items-start lg:gap-10 lg:py-20 xl:gap-12 xl:py-24">
+      <div className="relative z-10 mx-auto flex w-full max-w-7xl flex-col justify-center py-14 sm:py-16 md:py-20 lg:grid lg:grid-cols-[minmax(0,0.92fr)_minmax(0,1.28fr)] lg:items-start lg:gap-10 lg:py-20 xl:gap-12 xl:py-24">
         <div className="mb-8 flex justify-center lg:mb-0 lg:sticky lg:top-[5.5rem] lg:max-h-[calc(100dvh-6.5rem)] lg:self-start">
           <div className="group relative aspect-[4/3] w-full max-w-[500px] lg:max-w-none">
             <div className="absolute inset-0 rotate-3 scale-95 rounded-2xl border border-surface bg-surface-strong opacity-50 backdrop-blur-md transition-transform group-hover:rotate-0" />
