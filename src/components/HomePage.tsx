@@ -5,8 +5,15 @@ import CaseStudy from "@/components/canvas/CaseStudy";
 import IDESection from "@/components/ide/IDESection";
 import type { IdeTabContent } from "@/types/ide";
 import type { Project } from "@/types/project";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { AnimatePresence } from "framer-motion";
+import gsap from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
+
+gsap.registerPlugin(ScrollTrigger);
+
+const CASE_STUDIES_INITIAL = 4;
+const CASE_STUDIES_STEP = 2;
 
 interface HomePageProps {
   projects: Project[];
@@ -15,16 +22,45 @@ interface HomePageProps {
 
 export default function HomePage({ projects, ideTabs }: HomePageProps) {
   const [showHiddenLog, setShowHiddenLog] = useState(false);
+  const [visibleCaseStudyCount, setVisibleCaseStudyCount] = useState(CASE_STUDIES_INITIAL);
+
+  useEffect(() => {
+    setVisibleCaseStudyCount(CASE_STUDIES_INITIAL);
+  }, [projects]);
+
+  const visibleProjects = projects.slice(0, visibleCaseStudyCount);
+  const hiddenCaseStudyCount = projects.length - visibleProjects.length;
+  const nextRevealCount = Math.min(CASE_STUDIES_STEP, hiddenCaseStudyCount);
 
   return (
     <main className="page-canvas relative">
       <Hero />
 
       <div className="relative isolate">
-        {projects.map((project, index) => (
+        {visibleProjects.map((project, index) => (
           <CaseStudy key={project.id} project={project} index={index} />
         ))}
       </div>
+
+      {hiddenCaseStudyCount > 0 && (
+        <div className="relative z-10 flex justify-center border-b border-surface bg-section-alt px-3 py-10 sm:px-4 md:px-12 sm:py-12">
+          <button
+            type="button"
+            onClick={() => {
+              setVisibleCaseStudyCount((count) =>
+                Math.min(count + CASE_STUDIES_STEP, projects.length),
+              );
+              requestAnimationFrame(() => ScrollTrigger.refresh());
+            }}
+            className="green-pill inline-flex items-center justify-center px-8 py-3.5 text-sm font-bold sm:text-base"
+          >
+            View more case studies
+            <span className="ml-2 font-mono text-xs font-normal opacity-80">
+              (+{nextRevealCount})
+            </span>
+          </button>
+        </div>
+      )}
 
       <IDESection ideTabs={ideTabs} />
 
