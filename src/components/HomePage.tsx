@@ -17,7 +17,7 @@ export default function HomePage({ projects, ideTabs }: HomePageProps) {
   const [showHiddenLog, setShowHiddenLog] = useState(false);
 
   return (
-    <main className="page-canvas relative overflow-x-hidden">
+    <main className="page-canvas relative">
       <Hero />
 
       <div className="relative isolate">

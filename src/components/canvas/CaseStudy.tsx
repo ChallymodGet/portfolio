@@ -72,18 +72,20 @@ export default function CaseStudy({ project, index }: CaseStudyProps) {
           }
         );
 
-        // Combined Micro-interaction: Parallax + Scale Expansion + Contrast
-        gsap.to(imgRef.current, {
-          y: -30,
-          scale: 1.05,
-          filter: "contrast(1.1) brightness(1.05)",
-          scrollTrigger: {
-            trigger: section,
-            start: "top bottom",
-            end: "bottom top",
-            scrub: true,
-          },
-        });
+        const desktopLayout = window.matchMedia("(min-width: 1024px)");
+        if (!desktopLayout.matches) {
+          gsap.to(imgRef.current, {
+            y: -30,
+            scale: 1.05,
+            filter: "contrast(1.1) brightness(1.05)",
+            scrollTrigger: {
+              trigger: section,
+              start: "top bottom",
+              end: "bottom top",
+              scrub: true,
+            },
+          });
+        }
 
         // Micro-interaction: Mouse-follow Tilt Effect
         const handleMouseMove = (e: MouseEvent) => {
@@ -116,7 +118,6 @@ export default function CaseStudy({ project, index }: CaseStudyProps) {
       }
     }, sectionRef);
 
-    // Ensure ScrollTrigger is aware of final layout
     const timer = setTimeout(() => ScrollTrigger.refresh(), 500);
     const onResize = () => ScrollTrigger.refresh();
     window.addEventListener("resize", onResize);
@@ -131,12 +132,12 @@ export default function CaseStudy({ project, index }: CaseStudyProps) {
       clearTimeout(timer);
       ctx.revert();
     };
-  }, []);
+  }, [project.id]);
 
   return (
     <section
       ref={sectionRef}
-      className={`relative isolate w-full overflow-hidden border-b border-surface scroll-mt-24 ${
+      className={`relative isolate w-full overflow-x-clip border-b border-surface scroll-mt-24 ${
         index % 2 === 0 ? "bg-background" : "bg-section-alt"
       }`}
       style={{ zIndex: index + 1 }}
@@ -146,9 +147,9 @@ export default function CaseStudy({ project, index }: CaseStudyProps) {
         aria-hidden
       />
 
-      <div className="relative z-10 mx-auto flex w-full max-w-6xl flex-col justify-center px-4 py-14 sm:px-6 sm:py-16 md:py-20 lg:grid lg:grid-cols-2 lg:items-start lg:gap-10 lg:py-24 xl:gap-12 xl:py-28">
-        <div className="mb-10 flex justify-center lg:mb-0 lg:sticky lg:top-24 lg:self-start">
-          <div className="group relative aspect-[4/3] w-full max-w-[500px]">
+      <div className="relative z-10 mx-auto flex w-full max-w-6xl flex-col justify-center px-4 py-14 sm:px-6 sm:py-16 md:py-20 lg:grid lg:grid-cols-[minmax(0,1fr)_minmax(0,1.15fr)] lg:items-start lg:gap-10 lg:py-20 xl:gap-12 xl:py-24">
+        <div className="mb-8 flex justify-center lg:mb-0 lg:sticky lg:top-[5.5rem] lg:max-h-[calc(100dvh-6.5rem)] lg:self-start">
+          <div className="group relative aspect-[4/3] w-full max-w-[500px] lg:max-w-none">
             <div className="absolute inset-0 rotate-3 scale-95 rounded-2xl border border-surface bg-surface-strong opacity-50 backdrop-blur-md transition-transform group-hover:rotate-0" />
 
             <img
@@ -164,12 +165,12 @@ export default function CaseStudy({ project, index }: CaseStudyProps) {
           </div>
         </div>
 
-        <div className="space-y-8 sm:space-y-10">
+        <div className="min-w-0 space-y-6 sm:space-y-8" data-case-content>
           <div>
             <p className="mb-2 font-mono text-[10px] uppercase tracking-widest text-accent-green sm:text-xs">
               Case Study {String(index + 1).padStart(2, "0")}
             </p>
-            <h2 className="mb-3 break-words text-3xl font-bold tracking-tighter text-foreground sm:mb-4 sm:text-4xl lg:text-5xl">
+            <h2 className="mb-3 break-words text-3xl font-bold tracking-tighter text-foreground sm:mb-4 sm:text-4xl lg:text-4xl xl:text-5xl">
               {project.title}
             </h2>
             <p className="text-base leading-relaxed text-muted sm:text-lg">
@@ -177,7 +178,7 @@ export default function CaseStudy({ project, index }: CaseStudyProps) {
             </p>
           </div>
 
-          <div className="grid grid-cols-1 gap-3 min-[420px]:grid-cols-2 sm:gap-4">
+          <div className="grid grid-cols-2 gap-2 sm:gap-3">
             {project.metrics.map((m, i) => (
               <div
                 key={i}
@@ -204,27 +205,34 @@ export default function CaseStudy({ project, index }: CaseStudyProps) {
             </button>
           )}
 
-          <div className="space-y-4 sm:space-y-6">
-            {project.challenges.map((c, i) => (
-              <div
-                key={i}
-                className="case-item rounded-r-xl border-l-2 border-accent-green bg-surface p-4 backdrop-blur-sm sm:p-6"
-              >
-                <p className="mb-2 font-mono text-xs uppercase tracking-widest text-accent-green sm:text-sm">
-                  The Challenge
-                </p>
-                <p className="mb-3 text-sm italic text-muted sm:mb-4 sm:text-base">
-                  &ldquo;{c.problem}&rdquo;
-                </p>
-                <p className="mb-2 font-mono text-xs uppercase tracking-widest text-accent-blue sm:text-sm">
-                  The Solution
-                </p>
-                <p className="text-sm font-medium text-foreground sm:text-base">
-                  {c.solution}
-                </p>
-              </div>
-            ))}
-          </div>
+          {project.challenges.length > 0 && (
+            <div>
+              <p className="mb-3 font-mono text-[10px] uppercase tracking-widest text-muted sm:text-xs">
+                Challenge → Solution
+              </p>
+              <ul className="grid list-none grid-cols-1 gap-3 sm:grid-cols-2 xl:grid-cols-3">
+                {project.challenges.map((c, i) => (
+                  <li
+                    key={i}
+                    className="case-item flex h-full flex-col rounded-xl border border-surface border-l-2 border-l-accent-green bg-surface p-3 backdrop-blur-sm sm:p-4"
+                  >
+                    <p className="mb-1 font-mono text-[9px] uppercase tracking-widest text-accent-green sm:text-[10px]">
+                      Challenge
+                    </p>
+                    <p className="mb-3 flex-1 text-xs leading-snug text-muted sm:text-sm">
+                      {c.problem}
+                    </p>
+                    <p className="mb-1 font-mono text-[9px] uppercase tracking-widest text-accent-blue sm:text-[10px]">
+                      Solution
+                    </p>
+                    <p className="text-xs font-medium leading-snug text-foreground sm:text-sm">
+                      {c.solution}
+                    </p>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          )}
         </div>
       </div>
 

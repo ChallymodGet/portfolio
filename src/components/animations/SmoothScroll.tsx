@@ -26,12 +26,13 @@ export default function SmoothScroll({ children }: { children: ReactNode }) {
 
     lenis.on("scroll", ScrollTrigger.update);
 
-    function raf(time: number) {
+    let rafId = 0;
+    const raf = (time: number) => {
       lenis.raf(time);
-      requestAnimationFrame(raf);
-    }
+      rafId = requestAnimationFrame(raf);
+    };
+    rafId = requestAnimationFrame(raf);
 
-    requestAnimationFrame(raf);
     ScrollTrigger.refresh();
 
     const onResize = () => ScrollTrigger.refresh();
@@ -39,6 +40,7 @@ export default function SmoothScroll({ children }: { children: ReactNode }) {
 
     return () => {
       window.removeEventListener("resize", onResize);
+      cancelAnimationFrame(rafId);
       lenis.destroy();
     };
   }, []);
