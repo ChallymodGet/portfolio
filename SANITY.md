@@ -30,7 +30,7 @@ Open [http://localhost:3000/studio](http://localhost:3000/studio), sign in with 
 
 | Type | Use |
 |------|-----|
-| **Case Study** | One per portfolio project (slug = site id, e.g. `shkula`). Match categories: EdTech, HealthTech, FinTech, Enterprise. Image fields are **paths** like `/projects/shkula/hero.png` (files stay in `public/`). |
+| **Case Study** | One per portfolio project (slug = site id, e.g. `shkula`). Match categories: EdTech, HealthTech, FinTech, Enterprise, Delivery. Image fields are **paths** like `/projects/shkula/hero.png` (files stay in `public/`). |
 | **About IDE Tab** | Three tabs: `profile`, `stack`, `metrics` — code + preview text for the IDE section. |
 
 Until Sanity has published documents, the site uses the built-in fallbacks in `src/lib/projects.ts` and `src/lib/ideDefaults.ts`.

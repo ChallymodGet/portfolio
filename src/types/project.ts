@@ -1,7 +1,7 @@
 export interface Project {
   id: string;
   title: string;
-  category: "EdTech" | "HealthTech" | "FinTech" | "Enterprise";
+  category: "EdTech" | "HealthTech" | "FinTech" | "Enterprise" | "Delivery";
   heroImage: string;
   wireframeImage: string;
   finalImage: string;

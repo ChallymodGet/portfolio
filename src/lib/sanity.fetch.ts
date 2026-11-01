@@ -25,6 +25,7 @@ const validCategories = new Set<Project["category"]>([
   "HealthTech",
   "FinTech",
   "Enterprise",
+  "Delivery",
 ]);
 
 function mapCaseStudy(doc: SanityCaseStudy): Project | null {

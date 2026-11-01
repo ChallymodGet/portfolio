@@ -28,6 +28,7 @@ export const caseStudy = defineType({
           { title: "HealthTech", value: "HealthTech" },
           { title: "FinTech", value: "FinTech" },
           { title: "Enterprise", value: "Enterprise" },
+          { title: "Delivery", value: "Delivery" },
         ],
       },
       validation: (rule) => rule.required(),
