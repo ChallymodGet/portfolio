@@ -1,0 +1,13 @@
+---
+description: Portfolio project context for new sessions
+alwaysApply: true
+---
+
+# Portfolio (ModGet Designs)
+
+Before non-trivial work, read **docs/AGENT-HANDOFF.md** and **README.md**.
+
+- Next.js 16 App Router; Sanity CMS at `/studio` (project `qczwyuw7`).
+- Home: `(site)/page.tsx` + CMS fetch with fallbacks; case studies paginate 4 then +2.
+- Do not add `Co-authored-by` on git commits (see git-commits-no-coauthors.mdc).
+- Sanity/CMS details: SANITY.md. Roadmap vs done: PIPELINE.md.

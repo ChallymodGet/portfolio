@@ -1,26 +1,48 @@
-# Project Pipeline: The Product Architect's OS
-## Goal: High-end, interactive portfolio bridging Design & Code.
-## Tech Stack: Next.js, React, TypeScript, GSAP, Lenis, Framer Motion, Tailwind CSS.
+# Project pipeline — status
 
-### 🏗️ Infrastructure Phase
-- [x] Project Initialization (Next.js + TS)
-- [x] Global Design System (Charcoal Theme + Blueprint Grid)
-- [x] Smooth Scroll Integration (Lenis)
-- [x] State-Aware Custom Cursor (Design/IDE modes)
+High-level roadmap for the Product Architect portfolio. **Implemented** items reflect the codebase as of the last doc update; verify in Git if unsure.
 
-### 🎨 Visual Experience Phase
-- [x] Hero Section: "System Boot" render animation
-- [x] Glass-morphism Visual Anchors
-- [ ] Case Studies: Scroll-driven storytelling (Pinning + Annotations)
-- [ ] Project Narrative: Deconstruction (Wireframe -> UI)
-- [ ] "The Morph": Transition from Canvas Mode to IDE Mode
+## Infrastructure — done
 
-### 💻 Technical Depth Phase
-- [ ] About Me: "The Code-Based Bio" (TypeScript object representation)
-- [ ] Skills Terminal: Interactive command-line skill integration
-- [ ] Contact: "Glass Shatter" / Glitch CTA
+- [x] Next.js App Router + TypeScript
+- [x] Tailwind v4 + semantic CSS variables (light/dark via `data-theme`)
+- [x] Lenis smooth scroll (desktop) + GSAP ScrollTrigger
+- [x] Custom cursor, theme toggle, easter eggs
+- [x] Sanity CMS embedded at `/studio`
+- [x] Vercel deploy + env-based Sanity fetch with code fallbacks
 
-### 🚀 Optimization & Launch
-- [ ] Performance Audit (Lighthouse / Core Web Vitals)
-- [ ] Responsive Adaptation (Mobile-first architecture)
-- [ ] Deployment to Vercel
+## Visual experience — largely done
+
+- [x] Hero (“system boot” style)
+- [x] Case studies: two-column layout, sticky hero (desktop), metrics, challenge/solution grid
+- [x] Behance embed modal (selected projects)
+- [x] Category pills on hero image (top-right)
+- [x] Light mode polish (sections, mesh/grid)
+- [x] Case study width aligned with IDE section (`max-w-7xl`, section-level `md:px-12`)
+- [x] Homepage pagination: 4 case studies, then +2 per “View more”
+- [ ] Optional: wireframe → final scroll narrative per project (data exists; UI not fully used)
+- [ ] Optional: stronger “canvas → IDE” transition between sections
+
+## Technical depth — partial
+
+- [x] About: IDE section with scroll-pinned tabs (profile / stack / metrics)
+- [x] CMS-editable IDE tab content
+- [ ] Skills terminal (beyond decorative fake terminal output)
+- [ ] Contact: advanced CTA effects (“glass shatter” etc.)
+
+## Optimization & launch — ongoing
+
+- [x] Responsive layout (mobile/tablet/desktop breakpoints)
+- [ ] Lighthouse / Core Web Vitals pass documented
+- [ ] Custom domain on Vercel (owner may use `modgetdesigns` naming)
+- [ ] Optional: protect `/studio` in production (middleware / Sanity roles)
+
+## Content (owner / CMS)
+
+- [x] Sanity project `qczwyuw7`, categories include **Delivery**
+- [ ] All portfolio projects migrated to Sanity (fallback `projects.ts` still used when CMS empty or partial)
+- [ ] Asset naming convention under `public/projects/` (hero, wireframe, final per slug)
+
+## Removed / rejected
+
+- [x] Scroll “chew” animation — removed per owner request; do not re-add without explicit spec
