@@ -2,10 +2,11 @@
 
 import Hero from "@/components/canvas/Hero";
 import CaseStudy from "@/components/canvas/CaseStudy";
+import CaseStudyFilters from "@/components/CaseStudyFilters";
 import IDESection from "@/components/ide/IDESection";
 import type { IdeTabContent } from "@/types/ide";
 import type { Project } from "@/types/project";
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { AnimatePresence } from "framer-motion";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
@@ -24,22 +25,90 @@ export default function HomePage({ projects, ideTabs }: HomePageProps) {
   const [showHiddenLog, setShowHiddenLog] = useState(false);
   const [visibleCaseStudyCount, setVisibleCaseStudyCount] = useState(CASE_STUDIES_INITIAL);
 
-  useEffect(() => {
-    setVisibleCaseStudyCount(CASE_STUDIES_INITIAL);
-  }, [projects]);
+  const [selectedCategories, setSelectedCategories] = useState<string[]>([]);
+  const [selectedTags, setSelectedTags] = useState<string[]>([]);
 
-  const visibleProjects = projects.slice(0, visibleCaseStudyCount);
-  const hiddenCaseStudyCount = projects.length - visibleProjects.length;
+  const categories = useMemo(
+    () => [...new Set(projects.map((p) => p.category))].sort(),
+    [projects],
+  );
+
+  // Only offer tags used by case studies in the selected categories
+  const availableTags = useMemo(() => {
+    const scoped = selectedCategories.length
+      ? projects.filter((p) => selectedCategories.includes(p.category))
+      : projects;
+    return [...new Set(scoped.flatMap((p) => p.techStack))].sort();
+  }, [projects, selectedCategories]);
+
+  // Category and tag groups combine with AND; pills within a group match any
+  const filteredProjects = useMemo(
+    () =>
+      projects.filter(
+        (p) =>
+          (!selectedCategories.length || selectedCategories.includes(p.category)) &&
+          (!selectedTags.length || selectedTags.some((t) => p.techStack.includes(t))),
+      ),
+    [projects, selectedCategories, selectedTags],
+  );
+
+  useEffect(() => {
+    requestAnimationFrame(() => ScrollTrigger.refresh());
+  }, [filteredProjects]);
+
+  const toggleCategory = (category: string) => {
+    setVisibleCaseStudyCount(CASE_STUDIES_INITIAL);
+    const next = selectedCategories.includes(category)
+      ? selectedCategories.filter((c) => c !== category)
+      : [...selectedCategories, category];
+    const nextTagPool = new Set(
+      projects
+        .filter((p) => !next.length || next.includes(p.category))
+        .flatMap((p) => p.techStack),
+    );
+    setSelectedCategories(next);
+    setSelectedTags((tags) => tags.filter((t) => nextTagPool.has(t)));
+  };
+
+  const toggleTag = (tag: string) => {
+    setVisibleCaseStudyCount(CASE_STUDIES_INITIAL);
+    setSelectedTags((tags) =>
+      tags.includes(tag) ? tags.filter((t) => t !== tag) : [...tags, tag],
+    );
+  };
+
+  const visibleProjects = filteredProjects.slice(0, visibleCaseStudyCount);
+  const hiddenCaseStudyCount = filteredProjects.length - visibleProjects.length;
   const nextRevealCount = Math.min(CASE_STUDIES_STEP, hiddenCaseStudyCount);
 
   return (
     <main className="page-canvas relative">
       <Hero />
 
+      <CaseStudyFilters
+        categories={categories}
+        tags={availableTags}
+        selectedCategories={selectedCategories}
+        selectedTags={selectedTags}
+        resultCount={filteredProjects.length}
+        onToggleCategory={toggleCategory}
+        onToggleTag={toggleTag}
+        onClear={() => {
+          setVisibleCaseStudyCount(CASE_STUDIES_INITIAL);
+          setSelectedCategories([]);
+          setSelectedTags([]);
+        }}
+      />
+
       <div className="relative isolate">
         {visibleProjects.map((project, index) => (
           <CaseStudy key={project.id} project={project} index={index} />
         ))}
+        {!filteredProjects.length && (
+          <p className="border-b border-surface px-4 py-16 text-center font-mono text-xs uppercase tracking-widest text-muted">
+            No case studies match these filters
+          </p>
+        )}
       </div>
 
       {hiddenCaseStudyCount > 0 && (
@@ -48,7 +117,7 @@ export default function HomePage({ projects, ideTabs }: HomePageProps) {
             type="button"
             onClick={() => {
               setVisibleCaseStudyCount((count) =>
-                Math.min(count + CASE_STUDIES_STEP, projects.length),
+                Math.min(count + CASE_STUDIES_STEP, filteredProjects.length),
               );
               requestAnimationFrame(() => ScrollTrigger.refresh());
             }}
