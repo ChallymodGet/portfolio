@@ -1,7 +1,8 @@
 export interface Project {
   id: string;
   title: string;
-  category: "EdTech" | "HealthTech" | "FinTech" | "Enterprise" | "Delivery";
+  /** Category title from Sanity (e.g. EdTech, Mobility) */
+  category: string;
   heroImage: string;
   wireframeImage: string;
   finalImage: string;

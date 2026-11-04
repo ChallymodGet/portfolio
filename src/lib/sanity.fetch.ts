@@ -20,23 +20,13 @@ type SanityIdeTab = {
   preview: string;
 };
 
-const validCategories = new Set<Project["category"]>([
-  "EdTech",
-  "HealthTech",
-  "FinTech",
-  "Enterprise",
-  "Delivery",
-]);
-
 function mapCaseStudy(doc: SanityCaseStudy): Project | null {
-  if (!doc?.id || !doc.title || !validCategories.has(doc.category as Project["category"])) {
-    return null;
-  }
+  if (!doc?.id || !doc.title || !doc.category) return null;
 
   return {
     id: doc.id,
     title: doc.title,
-    category: doc.category as Project["category"],
+    category: doc.category,
     heroImage: doc.heroImage || "/projects/placeholder.png",
     wireframeImage: doc.wireframeImage || doc.heroImage,
     finalImage: doc.finalImage || doc.heroImage,

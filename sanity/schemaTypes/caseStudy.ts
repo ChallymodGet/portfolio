@@ -19,19 +19,24 @@ export const caseStudy = defineType({
       validation: (rule) => rule.required(),
     }),
     defineField({
-      name: "category",
+      name: "categoryRef",
       title: "Category tag",
+      description: "Pick one, or use “Create new” to add a category",
+      type: "reference",
+      to: [{ type: "category" }],
+      validation: (rule) =>
+        rule.custom((value, context) => {
+          const legacy = (context.document as { category?: string } | undefined)?.category;
+          return value || legacy ? true : "Pick a category";
+        }),
+    }),
+    defineField({
+      name: "category",
+      title: "Category tag (legacy)",
+      description: "Old text value. Used only until a Category tag above is picked.",
       type: "string",
-      options: {
-        list: [
-          { title: "EdTech", value: "EdTech" },
-          { title: "HealthTech", value: "HealthTech" },
-          { title: "FinTech", value: "FinTech" },
-          { title: "Enterprise", value: "Enterprise" },
-          { title: "Delivery", value: "Delivery" },
-        ],
-      },
-      validation: (rule) => rule.required(),
+      readOnly: true,
+      hidden: ({ document, value }) => !value || Boolean(document?.categoryRef),
     }),
     defineField({
       name: "order",
@@ -111,6 +116,10 @@ export const caseStudy = defineType({
     },
   ],
   preview: {
-    select: { title: "title", subtitle: "category" },
+    select: { title: "title", categoryTitle: "categoryRef.title", legacy: "category" },
+    prepare: ({ title, categoryTitle, legacy }) => ({
+      title,
+      subtitle: categoryTitle || legacy,
+    }),
   },
 });

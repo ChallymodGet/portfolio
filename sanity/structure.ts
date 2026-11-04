@@ -8,6 +8,10 @@ export const structure: StructureResolver = (S) =>
         .title("Case studies")
         .schemaType("caseStudy")
         .child(S.documentTypeList("caseStudy").title("Case studies")),
+      S.listItem()
+        .title("Categories")
+        .schemaType("category")
+        .child(S.documentTypeList("category").title("Categories")),
       S.divider(),
       S.listItem()
         .title("About tabs (IDE)")

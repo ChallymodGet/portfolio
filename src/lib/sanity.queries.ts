@@ -1,7 +1,7 @@
 export const caseStudiesQuery = `*[_type == "caseStudy"] | order(order asc, title asc) {
   "id": slug.current,
   title,
-  category,
+  "category": coalesce(categoryRef->title, category),
   heroImage,
   wireframeImage,
   finalImage,
