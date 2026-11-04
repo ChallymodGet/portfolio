@@ -111,25 +111,29 @@ export default function HomePage({ projects, ideTabs }: HomePageProps) {
         )}
       </div>
 
-      {hiddenCaseStudyCount > 0 && (
-        <div className="relative z-10 flex justify-center border-b border-surface bg-section-alt px-3 py-10 sm:px-4 md:px-12 sm:py-12">
-          <button
-            type="button"
-            onClick={() => {
-              setVisibleCaseStudyCount((count) =>
-                Math.min(count + CASE_STUDIES_STEP, filteredProjects.length),
-              );
-              requestAnimationFrame(() => ScrollTrigger.refresh());
-            }}
-            className="green-pill inline-flex items-center justify-center px-8 py-3.5 text-sm font-bold sm:text-base"
-          >
-            View more case studies
-            <span className="ml-2 font-mono text-xs font-normal opacity-80">
-              (+{nextRevealCount})
-            </span>
-          </button>
-        </div>
-      )}
+      {/* Always mounted: the pinned IDE section below is wrapped in a GSAP pin-spacer,
+          so React can't insert a new sibling before it */}
+      <div>
+        {hiddenCaseStudyCount > 0 && (
+          <div className="relative z-10 flex justify-center border-b border-surface bg-section-alt px-3 py-10 sm:px-4 md:px-12 sm:py-12">
+            <button
+              type="button"
+              onClick={() => {
+                setVisibleCaseStudyCount((count) =>
+                  Math.min(count + CASE_STUDIES_STEP, filteredProjects.length),
+                );
+                requestAnimationFrame(() => ScrollTrigger.refresh());
+              }}
+              className="green-pill inline-flex items-center justify-center px-8 py-3.5 text-sm font-bold sm:text-base"
+            >
+              View more case studies
+              <span className="ml-2 font-mono text-xs font-normal opacity-80">
+                (+{nextRevealCount})
+              </span>
+            </button>
+          </div>
+        )}
+      </div>
 
       <IDESection ideTabs={ideTabs} />
 
