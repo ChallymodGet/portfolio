@@ -20,6 +20,7 @@ High-level roadmap for the Product Architect portfolio. **Implemented** items re
 - [x] Light mode polish (sections, mesh/grid)
 - [x] Case study width aligned with IDE section (`max-w-7xl`, section-level `md:px-12`)
 - [x] Homepage pagination: 4 case studies, then +2 per “View more”
+- [x] Category + tech stack filter pills (tags scoped to selected categories)
 - [ ] Optional: wireframe → final scroll narrative per project (data exists; UI not fully used)
 - [ ] Optional: stronger “canvas → IDE” transition between sections
 
@@ -39,9 +40,16 @@ High-level roadmap for the Product Architect portfolio. **Implemented** items re
 
 ## Content (owner / CMS)
 
-- [x] Sanity project `qczwyuw7`, categories include **Delivery**
+- [x] Sanity project `qczwyuw7`, categories managed in Studio as `category` documents
 - [ ] All portfolio projects migrated to Sanity (fallback `projects.ts` still used when CMS empty or partial)
 - [ ] Asset naming convention under `public/projects/` (hero, wireframe, final per slug)
+
+## Graphic design portfolio — planned
+
+- [ ] Add graphic design works alongside the product/UX case studies (likely a new Sanity type next to `caseStudy`)
+- [ ] Post-hero portfolio chooser: when visitors scroll off the hero, an animated prompt with micro-interactions asks which portfolio they want to explore
+- [ ] Each choice leads into its own “world” (distinct look and flow for UX case studies vs graphic design)
+- Note: anything conditionally rendered next to the pinned IDE section needs an always-mounted wrapper (GSAP pin-spacer breaks React sibling insertion)
 
 ## Removed / rejected
 
